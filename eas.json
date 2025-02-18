@@ -1,0 +1,49 @@
+{
+  "cli": {
+    "version": ">= 14.0.2",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://kupzilla.duckdns.org",
+        "EXPO_PUBLIC_API_KEYGOOGLE": "AIzaSyAyn6WPUaMwF-7bqGw3-swrSUp4t9lC0wo",
+        "EXPO_PUBLIC_API_VERSION": "1.0.3",
+        "EXPO_PUBLIC_API_SECRET_KEY":"kupzilla!key@AIzaSyAyn6WPUaMwF"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://kupzilla.duckdns.org",
+        "EXPO_PUBLIC_API_KEYGOOGLE": "AIzaSyAyn6WPUaMwF-7bqGw3-swrSUp4t9lC0wo",
+        "EXPO_PUBLIC_API_VERSION": "1.0.3",
+        "EXPO_PUBLIC_API_SECRET_KEY":"kupzilla!key@AIzaSyAyn6WPUaMwF"
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+      "android": {
+        "buildType": "app-bundle",
+        "image": "latest"
+      },
+      "ios": {
+        "image": "latest"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://kupzilla.duckdns.org",
+        "EXPO_PUBLIC_API_KEYGOOGLE": "AIzaSyAyn6WPUaMwF-7bqGw3-swrSUp4t9lC0wo",
+        "EXPO_PUBLIC_API_VERSION": "1.0.3",
+        "EXPO_PUBLIC_API_SECRET_KEY":"kupzilla!key@AIzaSyAyn6WPUaMwF"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
