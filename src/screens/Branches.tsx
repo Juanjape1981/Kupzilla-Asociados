@@ -83,7 +83,7 @@ const handleInactivate = async (branchId: number, currentStatus: string) => {
       <Text style={styles.nameTitle}>{t('branches.branch')}</Text>
       {!branches?.length?
         <TouchableOpacity style={styles.createButton} onPress={handleCreate}>
-          <Text style={styles.createButtonText}>{t('branches.create')}</Text>
+          <Text style={styles.createButtonText}>{t('branches.create_branch')}</Text>
         </TouchableOpacity>:
          <FlatList
         data={branches}

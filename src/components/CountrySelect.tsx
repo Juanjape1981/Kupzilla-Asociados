@@ -41,7 +41,7 @@ const CountryPicker: React.FC<CountryPickerProps> = ({ selectedCountry, onCountr
         }}
         useNativeAndroidPickerStyle={false}
         Icon={() => {
-          return <Icon name="chevron-down" size={26} color="#007a8c" />;
+          return <Icon name="chevron-down" size={26} color={colors.primary} />;
         }}
       />
     </View>

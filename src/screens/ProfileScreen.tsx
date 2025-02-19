@@ -27,6 +27,7 @@ import { loadData } from '../redux/actions/dataLoader';
 import DatePickerInput from '../components/DatePickerInput';
 import colors from '../config/colors';
 import { useTranslation } from 'react-i18next';
+import { translateGender } from '../utils/translateGender';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
@@ -523,7 +524,7 @@ const ProfileScreen: React.FC = () => {
                       }}
                       useNativeAndroidPickerStyle={false}
                       Icon={() => {
-                        return <Ionicons name="chevron-down" size={26} color="#007a8c" />;
+                        return <Ionicons name="chevron-down" size={26} color={colors.primary} />;
                       }}
                     />
                   </View>
@@ -549,7 +550,7 @@ const ProfileScreen: React.FC = () => {
               <Text style={styles.text}>{formData.contact_info}</Text>
               <Text style={styles.text}>{formData.business_type}</Text>
               <Text style={styles.text}>{formData.birth_date ? formatDateToDDMMYYYY(formData.birth_date) : t('profile.date_of_birth')}</Text>
-              <Text style={styles.text}>{formData.gender}</Text>
+              <Text style={styles.text}>{translateGender(formData.gender)}</Text>
             </View>
           )}
           <Modal visible={isCategoriesModalVisible} animationType="slide" transparent>
@@ -812,7 +813,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-evenly",
-    backgroundColor: '#00a6bc',
+    backgroundColor: colors.orange_color,
     paddingVertical: 5,
     paddingHorizontal: 20,
     borderRadius: 25,

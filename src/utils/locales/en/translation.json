@@ -27,17 +27,19 @@
     "version": "Version"
   },
   "qrScanner": {
+    "invalidUser": "Only active users can be scanned.",
     "scanQRButton": "Scan QR",
     "consumptionsButton": "Consumptions",
     "invalidCode":"Invalid QR Code",
     "scanQRCode": "You must scan the QR code of the credential making the consumption.",
     "permissionAlert": {
-      "title": "Camera Permission Needed",
-      "message": "Camera access is required to scan the QR code.",
-      "requestPermission": "Request Permission",
-      "cancel": "Cancel",
-      "permissionDenied": "Permission Denied",
-      "goToSettings": "Please enable camera permission in settings."
+    "title": "Camera Permission Needed",
+    "message": "Camera access is required to scan the QR code.",
+    "requestPermission": "Request Permission",
+    "cancel": "Cancel",
+    "permissionDenied": "Permission Denied",
+    "goToSettings": "Please enable camera permission in settings."
+    
     },
     "clientLabel": "Client:",
     "noUserDetected": "User not detected",
@@ -121,6 +123,40 @@
     "success_message": "Status changed successfully",
     "error_message": "There was an error deactivating the branch"
   },
+  "branchForm": {
+  "name": "Branch Name",
+  "placeholdername": "* Branch Name",
+  "address": "Address",
+  "description": "Description",
+  "latitude": "Latitude",
+  "longitude": "Longitude",
+  "useCurrentLocation": "Use my current location",
+  "chooseLocation": "Choose the branch location on the map",
+  "deleteBranch": "Delete Branch",
+  "deleteConfirm": "Are you sure you want to delete this branch?",
+  "success": "Branch updated successfully",
+  "error": "There was an error updating the branch",
+  "successDelete": "Branch deleted successfully",
+  "errorDelete": "There was an error deleting the branch",
+  "placeholderDescription": "Branch description",
+  "saveChanges": "Save Changes",
+  "createBranch": "Create Branch",
+  "cancel": "Cancel",
+  "locationPermissionDenied": "Permission to access location denied",
+  "branchCreationSuccess": "The branch has been created successfully.",
+  "branchUpdateSuccess": "Branch updated successfully",
+  "branchUpdateError": "There was an issue updating the branch. Please try again.",
+  "branchDeleteSuccess": "The branch and its promotions have been deleted successfully.",
+  "branchDeleteError": "There was an issue deleting the branch.",
+  "branchNameMismatch": "The branch name does not match.",
+  "locationFetchError": "Error fetching location.",
+  "maxNameLength": "The name cannot exceed 30 characters.",
+  "maxAddressLength": "The address cannot exceed 50 characters.",
+  "maxDescriptionLength": "The description cannot exceed 250 characters.",
+  "missingFieldsError": "The following fields are required: ",
+  "missingName": "Name",
+  "missingLocation": "Latitude and Longitude"
+},
   "promotions": {
   "searchPromotions": "Search promotions",
   "keyword": "Keyword",
@@ -320,6 +356,9 @@
     "edit_categories": "Edit Categories",
     "confirm_categories": "Confirm Categories",
     "cancel_categories": "Cancel",
+    "male": "Male",
+    "female": "Female",
+    "other": "Other",
     "password_errors": {
       "min_length": "Password must be at least 8 characters long.",
       "uppercase": "Must include at least one uppercase letter.",
@@ -373,5 +412,21 @@
     "close": "Close",
     "loading": "Loading...",
     "address": "Address"
-  }
+  },
+  "ErrorModal":{
+    "errorTitle": "Error",
+    "closeButton": "Close"
+  },
+  "ExitoModal":{
+    "successTitle": "Success",
+    "closeButton": "Close"
+  },
+  "AlertModal":{
+    "title": "Alert",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+  "callout": {
+      "howToGetThere": "How to get there?"
+    }
 }

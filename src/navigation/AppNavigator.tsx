@@ -14,6 +14,8 @@ import BranchDetails from '../screens/BranchDetails ';
 import LandingPage from '../screens/LandingPage';
 import colors from '../config/colors';
 import SettingsScreen from '../screens/SettingsScreen';
+import { useTranslation } from 'react-i18next';
+import { Dimensions } from 'react-native';
 
 
 
@@ -38,12 +40,13 @@ export type MainTabsParamList = {
   Profil:undefined;
   // OtroTab: undefined;
 };
-
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const Stack = createStackNavigator<RootStackParamList>();
 
 const AppNavigator = () => {
   const accessToken = useSelector(getMemoizedAccessToken);
   const isAuthenticated = !!accessToken;
+  const { t } = useTranslation();
 
   return (
     // <NavigationContainer>
@@ -98,9 +101,13 @@ const AppNavigator = () => {
               component={SettingsScreen}
               options={{
                 headerShown: true,
-                headerTitle: "Configuración",
+                headerTitle: t('branchDetails.goBack') ,
                 headerStyle: { backgroundColor: colors.primary },
                 headerTintColor: "#fff",
+                headerTitleStyle: {
+                  fontSize: screenWidth*0.05,
+                  fontWeight: 'bold',
+                },
               }}
             />
             

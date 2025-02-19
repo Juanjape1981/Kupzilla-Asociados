@@ -4,6 +4,7 @@ import { WebView } from 'react-native-webview';
 import { Ionicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import colors from '../config/colors';
+import { useTranslation } from 'react-i18next';
 
 interface CustomCalloutProps {
   branch: any;
@@ -14,6 +15,7 @@ interface CustomCalloutProps {
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
 const CustomCallout: React.FC<CustomCalloutProps> = ({ branch, setbranch, handleRoutePress, prevSee }) => {
+  const { t } = useTranslation();
   // console.log("punto turistico", branch);
   const imageUrl = branch.branch_id
     ? `${API_URL}${branch.image_url}`
@@ -72,7 +74,7 @@ console.log("imagen callout",imageUrl);
             <Text style={styles.calloutadress}>{branch.address}</Text>
             <TouchableOpacity style={styles.calloutButton} onPress={handleDirectionsPress}>
               <MaterialCommunityIcons name="directions" size={24} color={colors.primary} />
-              <Text style={styles.calloutButtonText}>Cómo llegar?</Text>
+              <Text style={styles.calloutButtonText}>{t('callout.howToGetThere')}</Text>
             </TouchableOpacity>
           </View>
         </View>

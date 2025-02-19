@@ -215,9 +215,16 @@ const QRScanButton = () => {
   };
 
   const handleBarCodeScanned = ({ type, data }: ScanData) => {
-    // console.log('Scanned QR Code:', data);
+    console.log('Scanned QR Code:', data);
     setCameraVisible(false);
     const [userId, email] = data.split('-');
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!userId || !email || !emailRegex.test(email)) {
+    showErrorModal(t('qrScanner.invalidUser'));
+    return;
+  }
     setScannedUser(userId);
     setScannedEmail(email)
     setModalVisible(true);

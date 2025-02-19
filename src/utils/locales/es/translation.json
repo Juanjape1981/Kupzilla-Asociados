@@ -25,8 +25,10 @@
     "close": "Cerrar",
     "associates": "ASOCIADOS",
     "version": "Versión"
+    
   },
   "qrScanner": {
+    "invalidUser": "Solo se pueden escanear credenciales de usuarios activos.",
     "scanQRButton": "Escanear QR",
     "consumptionsButton": "Consumos",
     "invalidCode":"Código QR inválido",
@@ -119,6 +121,40 @@
     "inactive": "inactiva",
     "success_message": "Estado cambiado exitosamente",
     "error_message": "Hubo un error al inactivar la sucursal"
+  },
+  "branchForm": {
+  "name": "Nombre de la sucursal",
+  "placeholdername": "* Nombre de la sucursal",
+  "address": "Dirección",
+  "description": "Descripción",
+  "placeholderDescription": "Descripción de la sucursal",
+  "latitude": "Latitud",
+  "longitude": "Longitud",
+  "useCurrentLocation": "Usar mi ubicación actual",
+  "chooseLocation": "Elige la ubicación de la sucursal en el mapa",
+  "deleteBranch": "Eliminar Sucursal",
+  "deleteConfirm": "¿Estás seguro de que deseas eliminar esta sucursal?",
+  "success": "Sucursal actualizada con éxito",
+  "error": "Hubo un error al actualizar la sucursal",
+  "successDelete": "Sucursal eliminada con éxito",
+  "errorDelete": "Hubo un error al eliminar la sucursal",
+  "saveChanges": "Guardar Cambios",
+  "createBranch": "Crear Sucursal",
+  "cancel": "Cancelar",
+  "locationPermissionDenied": "Permiso para acceder a la ubicación denegado",
+  "branchCreationSuccess": "La sucursal se ha creado correctamente.",
+  "branchUpdateSuccess": "Sucursal actualizada con éxito",
+  "branchUpdateError": "Hubo un problema al guardar o actualizar la sucursal. Por favor, inténtalo de nuevo.",
+  "branchDeleteSuccess": "La sucursal y sus promociones se eliminaron correctamente.",
+  "branchDeleteError": "Hubo un problema al eliminar la sucursal.",
+  "branchNameMismatch": "El nombre de la sucursal no coincide.",
+  "locationFetchError": "Error al obtener la ubicación.",
+  "maxNameLength": "El nombre no puede superar los 30 caracteres.",
+  "maxAddressLength": "La dirección no puede superar los 50 caracteres.",
+  "maxDescriptionLength": "La descripción no puede superar los 250 caracteres.",
+  "missingFieldsError": "Los siguientes campos son obligatorios: ",
+  "missingName": "Nombre",
+  "missingLocation": "Latitud y Longitud"
   },
   "promotions": {
     "searchPromotions": "Buscar promociones",
@@ -376,5 +412,21 @@
     "loading": "Cargando...",
     "address": "Dirección",
     "ratings": "Valoraciones"
+  },
+  "ErrorModal":{
+    "errorTitle": "Error",
+    "closeButton": "Cerrar"
+  },
+  "ExitoModal":{
+    "successTitle": "Éxito",
+    "closeButton": "Cerrar"
+  },
+  "AlertModal":{
+    "title": "Alerta",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar"
+  },
+  "callout":{
+    "howToGetThere": "¿Cómo llegar?"
   }
 }

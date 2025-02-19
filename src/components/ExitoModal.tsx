@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import colors from '../config/colors';
+import { useTranslation } from 'react-i18next';
 
 interface ExitoModalProps {
   visible: boolean;
@@ -10,7 +11,7 @@ interface ExitoModalProps {
 }
 
 const ExitoModal: React.FC<ExitoModalProps> = ({ visible, message, onClose }) => {
-
+const { t } = useTranslation();
   return (
     <Modal
       visible={visible}
@@ -21,11 +22,11 @@ const ExitoModal: React.FC<ExitoModalProps> = ({ visible, message, onClose }) =>
         <View style={styles.modalContent}>
           <View style={styles.titleContainer}>
             <Ionicons name="checkmark-circle-outline" size={24} color="#249e3e" style={styles.icon}/>
-            <Text style={styles.modalTitle}>Éxito</Text>
+            <Text style={styles.modalTitle}>{t('ExitoModal.successTitle')}</Text>
           </View>
           <Text style={styles.modalMessage}>{message}</Text>
           <TouchableOpacity style={styles.modalButton} onPress={onClose}>
-            <Text style={styles.modalButtonText}>Cerrar</Text>
+            <Text style={styles.modalButtonText}>{t('ExitoModal.closeButton')}</Text>
           </TouchableOpacity>
         </View>
       </View>

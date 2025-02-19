@@ -28,11 +28,12 @@
       "version": "Version"
     },
     "qrScanner": {
-    "scanQRButton": "Skanna QR",
-    "consumptionsButton": "Förbrukningar",
-    "invalidCode":"Ogiltig QR-kod",
-    "scanQRCode": "Du måste skanna QR-koden för den legitimation som gör konsumtionen.",
-    "permissionAlert": {
+      "invalidUser": "Endast aktiva användare kan skannas.",
+      "scanQRButton": "Skanna QR",
+      "consumptionsButton": "Förbrukningar",
+      "invalidCode":"Ogiltig QR-kod",
+      "scanQRCode": "Du måste skanna QR-koden för den legitimation som gör konsumtionen.",
+      "permissionAlert": {
       "title": "Kamerabehörighet krävs",
       "message": "Kameratillgång krävs för att skanna QR-koden.",
       "requestPermission": "Begär behörighet",
@@ -109,6 +110,40 @@
     "success_message": "Status ändrades framgångsrikt",
     "error_message": "Det uppstod ett fel vid avaktivering av filialen"
   },
+  "branchForm": {
+  "name": "Filialnamn",
+  "placeholdername": "* Filialnamn",
+  "address": "Adress",
+  "description": "Beskrivning",
+  "placeholderDescription": "Filialbeskrivning",
+  "latitude": "Breddgrad",
+  "longitude": "Längdgrad",
+  "useCurrentLocation": "Använd min nuvarande plats",
+  "chooseLocation": "Välj filialens plats på kartan",
+  "deleteBranch": "Ta bort filial",
+  "deleteConfirm": "Är du säker på att du vill ta bort denna filial?",
+  "success": "Filialen uppdaterades framgångsrikt",
+  "error": "Det uppstod ett fel vid uppdatering av filialen",
+  "successDelete": "Filialen raderades framgångsrikt",
+  "errorDelete": "Det uppstod ett fel vid radering av filialen",
+  "saveChanges": "Spara ändringar",
+  "createBranch": "Skapa filial",
+  "cancel": "Avbryt",
+  "locationPermissionDenied": "Behörighet att komma åt plats nekad",
+  "branchCreationSuccess": "Filialen har skapats framgångsrikt.",
+  "branchUpdateSuccess": "Filialen uppdaterades framgångsrikt",
+  "branchUpdateError": "Det uppstod ett problem vid uppdatering av filialen. Vänligen försök igen.",
+  "branchDeleteSuccess": "Filialen och dess kampanjer har tagits bort framgångsrikt.",
+  "branchDeleteError": "Det uppstod ett problem vid borttagning av filialen.",
+  "branchNameMismatch": "Filialnamnet stämmer inte.",
+  "locationFetchError": "Fel vid hämtning av plats.",
+  "maxNameLength": "Namnet får inte överskrida 30 tecken.",
+  "maxAddressLength": "Adressen får inte överskrida 50 tecken.",
+  "maxDescriptionLength": "Beskrivningen får inte överskrida 250 tecken.",
+  "missingFieldsError": "Följande fält är obligatoriska: ",
+  "missingName": "Namn",
+  "missingLocation": "Breddgrad och längdgrad"
+},
   "promotions": {
   "searchPromotions": "Sök kampanjer",
   "keyword": "Nyckelord",
@@ -318,6 +353,9 @@
     "edit_categories": "Redigera kategorier",
     "confirm_categories": "Bekräfta kategorier",
     "cancel_categories": "Avbryt",
+    "male": "Man",
+    "female": "Kvinna",
+    "other": "Annat",
     "password_errors": {
       "min_length": "Lösenordet måste vara minst 8 tecken långt.",
       "uppercase": "Måste innehålla minst en versal bokstav.",
@@ -371,6 +409,22 @@
     "close": "Stäng",
     "loading": "Laddar...",
     "address": "Adress"
+  },
+  "ErrorModal":{
+    "errorTitle": "Fel",
+    "closeButton": "Stäng"
+  },
+  "ExitoModal":{
+    "successTitle": "Framgång",
+    "closeButton": "Stäng"
+  },
+  "AlertModal":{
+    "title": "Varning",
+    "cancel": "Avbryt",
+    "confirm": "Bekräfta"
+  },
+  "callout": {
+    "howToGetThere": "Hur tar man sig dit?"
   }
 }
   

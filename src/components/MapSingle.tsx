@@ -7,6 +7,7 @@ import CustomCallout from '../components/CustomCallout';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../config/colors';
 import Svg, { Path } from 'react-native-svg';
+import { useTranslation } from 'react-i18next';
 
 const { width: screenWidth } = Dimensions.get('window');
 const screenHeight = Dimensions.get('window').height;
@@ -62,6 +63,7 @@ const MapSingle: React.FC<MapComponentProps> = ({
   initialRegion,
   justSee
 }) => {
+  const { t } = useTranslation();
   const [searchLocation, setSearchLocation] = useState({
     latitude: branch?.latitude || initialRegion?.latitude,
     longitude: branch?.longitude || initialRegion?.longitude,
@@ -142,7 +144,7 @@ const MapSingle: React.FC<MapComponentProps> = ({
                   <Text style={styles.calloutDescription}>{branch.description}</Text>
                   <Text style={styles.calloutDescription}>{branch.address}</Text>
                   <TouchableOpacity style={styles.calloutButton} >
-                    <Text style={styles.calloutButtonText}>Cómo llegar?</Text>
+                    <Text style={styles.calloutButtonText}>{t('callout.howToGetThere')}</Text>
                   </TouchableOpacity>
                 </View>
               </Callout>

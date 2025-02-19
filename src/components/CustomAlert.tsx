@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import colors from '../config/colors';
+import { useTranslation } from 'react-i18next';
 
 interface CustomAlertProps {
   isVisible: boolean;
@@ -11,6 +12,7 @@ interface CustomAlertProps {
 }
 
 const CustomAlert: React.FC<CustomAlertProps> = ({ isVisible, title, message, onCancel, onConfirm }) => {
+  const { t } = useTranslation();
   if (!isVisible) return null;
 
   return (
@@ -23,10 +25,10 @@ const CustomAlert: React.FC<CustomAlertProps> = ({ isVisible, title, message, on
         <Text style={styles.alertMessage}>{message}</Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>
-            <Text style={styles.cancelButtonText}>Cancelar</Text>
+            <Text style={styles.cancelButtonText}>{t('AlertModal.cancel')}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.confirmButton} onPress={onConfirm}>
-            <Text style={styles.confirmButtonText}>Confirmar</Text>
+            <Text style={styles.confirmButtonText}>{t('AlertModal.confirm')}</Text>
           </TouchableOpacity>
         </View>
       </View>

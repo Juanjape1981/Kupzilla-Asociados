@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import colors from '../config/colors';
+import { useTranslation } from 'react-i18next';
 
 interface ErrorModalProps {
   visible: boolean;
@@ -10,6 +11,7 @@ interface ErrorModalProps {
 }
 
 const ErrorModal: React.FC<ErrorModalProps> = ({ visible, message, onClose }) => {
+  const { t } = useTranslation();
   return (
     <Modal
       visible={visible}
@@ -21,11 +23,11 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ visible, message, onClose }) =>
         <View style={styles.modalContent}>
           <View style={styles.titleContainer}>
             <Ionicons name="alert-circle-outline" size={24} color="#cc1818" style={styles.icon} />
-            <Text style={styles.modalTitle}>Error</Text>
+            <Text style={styles.modalTitle}>{t('ErrorModal.errorTitle')}</Text>
           </View>
           <Text style={styles.modalMessage}>{message}</Text>
           <TouchableOpacity style={styles.modalButton} onPress={onClose}>
-            <Text style={styles.modalButtonText}>Cerrar</Text>
+            <Text style={styles.modalButtonText}>{t('ErrorModal.closeButton')}</Text>
           </TouchableOpacity>
         </View>
       </View>

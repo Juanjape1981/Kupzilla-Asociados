@@ -21,6 +21,7 @@ import ExitoModal from './ExitoModal';
 import { fetchPromotions } from '../redux/actions/promotionsActions';
 import ErrorModal from './ErrorModal';
 import colors from '../config/colors';
+import { useTranslation } from 'react-i18next';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
@@ -47,7 +48,7 @@ export interface BranchCreate {
 //   longitudeDelta: 0.02,
 // };
 export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
-
+  const { t } = useTranslation();
   const dispatch: AppDispatch = useDispatch();
   const user = useSelector(getMemoizedUserData) as UserData;
   const promotions = useSelector(getMemoizedPromotions);
@@ -76,13 +77,13 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
     latitudeDelta: 0.035,
     longitudeDelta: 0.02,
   });
-  console.log("sucursal elegida", branch);
+  // console.log("sucursal elegida", branch);
   // console.log("promociones de la sucursal", promotions);
   useEffect(() => {
     const getLocation = async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        showErrorModal('Permiso para acceder a la ubicación denegado');
+        showErrorModal(t('branchForm.locationPermissionDenied'));
         return;
       }
 
@@ -96,13 +97,14 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
         longitudeDelta: 0.02,
       });
     };
-
-    getLocation();
+    if(!branch){
+      getLocation();
+    }
   }, []);
 
   const handleSubmit = async () => {
     const activeState = statuses.find(status => status?.name === 'active');
-    console.log("estado activo", activeState);
+    // console.log("estado activo", activeState);
     
     setIsLoading(true);
     const image_data = images?.length > 0 ? images[0].data : '';
@@ -135,13 +137,13 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
       // console.log("respuesta del dispatch (update)", resp);
       dispatch(fetchBranches(user.user_id))
       dispatch(fetchPartnerById(user.user_id));
-      showSuccessModal('La sucursal se ha actualizado correctamente.');
+      showSuccessModal(t('branchForm.success'));
     } else {
       if(!branchData.name || !branchData.latitude || !branchData.longitude){
         const missingFields = [];
-        if (!branchData.name || branchData.name =='') missingFields.push('Nombre');
-        if (!branchData.latitude) missingFields.push('Latitud y Longitud');
-        const errorMessage = `Los siguientes campos son obligatorios: ${missingFields.join(', ')}.`;
+        if (!branchData.name || branchData.name =='') missingFields.push(t('branchForm.missingName'));
+        if (!branchData.latitude) missingFields.push(t('branchForm.missingLocation'));
+        const errorMessage = `${t('branchForm.missingFieldsError')} ${missingFields.join(', ')}.`;
         showErrorModal(errorMessage)
         return
       }
@@ -149,13 +151,13 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
       console.log(resp);
       dispatch(fetchBranches(user.user_id))
       dispatch(fetchPartnerById(user.user_id));
-      showSuccessModal('La sucursal se ha creado correctamente.');
+      showSuccessModal(t('branchForm.branchCreationSuccess'));
       // console.log("respuesta del dispatch (add)", resp);
     }
       onClose();
     } catch (error) {
       console.error('Error al enviar los datos de la sucursal:', error);
-      showErrorModal('Hubo un problema al guardar la sucursal. Por favor, inténtalo de nuevo.');
+      showErrorModal(t('branchForm.branchUpdateError'));
     } finally {
       setIsLoading(false);
     }
@@ -189,7 +191,7 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
       // Pedir permiso para acceder a la ubicación
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        showErrorModal('Permiso para acceder a la ubicación denegado');
+        showErrorModal(t('branchForm.locationPermissionDenied'));
         return;
       }
 
@@ -199,7 +201,7 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
       setLongitude(location.coords.longitude.toString());
       
     } catch (error) {
-      console.error('Error al obtener la ubicación:', error);
+      console.error(t('branchForm.locationFetchError'), error);
     }finally{
       setIsLoading(false);
     }
@@ -233,20 +235,20 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
         if(resp.status == 200){
           dispatch(fetchBranches(user.user_id))
           dispatch(fetchPromotions(user.user_id))
-          showSuccessModal('La sucursal y sus promociones se eliminaron correctamente.');
+          showSuccessModal(t('branchForm.branchDeleteSuccess'));
         }
        
         // Alert.alert('Éxito', 'La sucursal ha sido eliminada correctamente.');
         // onClose();
       } catch (error) {
         console.error('Error al eliminar la sucursal:', error);
-        showErrorModal('Hubo un problema al eliminar la sucursal.');
+        showErrorModal(t('branchForm.branchDeleteError'));
       } finally {
         setDeleting(false);
         setShowDeleteModal(false);
       }
     } else {
-      showErrorModal('El nombre de la sucursal no coincide.');
+      showErrorModal(t('branchForm.branchNameMismatch'));
     }
   };
   const showErrorModal = (message: string) => {
@@ -259,7 +261,7 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
   };
   const handleNameChange = (text: string) => {
     if (text.length > 30) {
-      showErrorModal('El nombre no puede superar los 30 caracteres.');
+      showErrorModal(t('branchForm.maxNameLength'));
     } else {
       setName(text);
     }
@@ -267,7 +269,7 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
   
   const handleAddressChange = (text: string) => {
     if (text.length > 50) {
-      showErrorModal('La dirección no puede superar los 50 caracteres.');
+      showErrorModal(t('branchForm.maxAddressLength'));
     } else {
       setAddress(text);
     }
@@ -275,7 +277,7 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
   
   const handleDescriptionChange = (text: string) => {
     if (text.length > 250) {
-      showErrorModal('La descripción no puede superar los 250 caracteres.');
+      showErrorModal(t('branchForm.maxDescriptionLength'));
     } else {
       setDescription(text);
     }
@@ -321,10 +323,10 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
       component: (
         isEditing?
         <>
-          <Text style={styles.labelTitle}>Nombre</Text>
+          <Text style={styles.labelTitle}>{t('branchForm.name')}</Text>
           <TextInput
             style={styles.input}
-            placeholder="* Nombre de la sucursal"
+            placeholder={t('branchForm.placeholdername')}
             value={name}
             onChangeText={handleNameChange}
           />
@@ -336,15 +338,15 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
       component: (
         isEditing?
         <>
-          <Text style={styles.labelTitle}>Dirección</Text>
+          <Text style={styles.labelTitle}>{t('branchForm.address')}</Text>
           <TextInput
             style={styles.input}
-            placeholder="Dirección"
+            placeholder={t('branchForm.address')}
             value={address}
             onChangeText={handleAddressChange}
           />
         </>:<View>
-         <Text style={styles.labelTitle}>Dirección</Text>
+         <Text style={styles.labelTitle}>{t('branchForm.address')}</Text>
          <Text style={styles.label}>{address}</Text>
         </View>
       ),
@@ -354,7 +356,7 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
       component: (
         isEditing?
         <>
-          <Text style={styles.labelTitle}>Descripción</Text>
+          <Text style={styles.labelTitle}>{t('branchForm.description')}</Text>
           <TextInput
             style={styles.descriptioninput}
             placeholder="Descripción de la sucursal"
@@ -363,7 +365,7 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
             multiline={true} 
           />
         </>: <View>
-         <Text style={styles.labelTitle}>Descripción</Text>
+         <Text style={styles.labelTitle}>{t('branchForm.description')}</Text>
          <Text style={styles.label}>{description}</Text>
         </View>
       ),
@@ -373,7 +375,7 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
       component: (
         isEditing?
         <TouchableOpacity style={styles.locationButton} onPress={handleSetCurrentLocation}>
-          <Text style={styles.locationButtonText}>Usar mi ubicación actual</Text>
+          <Text style={styles.locationButtonText}>{t('branchForm.useCurrentLocation')}</Text>
         </TouchableOpacity>:
         <View></View>
       ),
@@ -383,10 +385,10 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
       component: (
         <View style={styles.locationContainer}>
           <View style={styles.locationInputWrapper}>
-            <Text style={styles.labellat}>Latitud</Text>
+            <Text style={styles.labellat}>{t('branchForm.latitude')}</Text>
             <TextInput
               style={styles.inputLatLong}
-              placeholder="* Latitud"
+              placeholder={t('branchForm.latitude')}
               keyboardType="numeric"
               value={latitude}
               onChangeText={setLatitude}
@@ -394,10 +396,10 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
             />
           </View>
           <View style={styles.locationInputWrapper}>
-            <Text style={styles.labellat}>Longitud</Text>
+            <Text style={styles.labellat}>{t('branchForm.longitude')}</Text>
             <TextInput
               style={styles.inputLatLong}
-              placeholder="* Longitud"
+              placeholder={t('branchForm.longitude')}
               keyboardType="numeric"
               value={longitude}
               onChangeText={setLongitude}
@@ -411,7 +413,7 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
       id: 'map',
       component: (
         <View>
-          {isEditing? <Text style={styles.labelMap}>Elige la ubicación de la sucursal en el mapa</Text>:<></>} 
+          {isEditing? <Text style={styles.labelMap}>{t('branchForm.chooseLocation')}</Text>:<></>} 
           <MapSingle
             branch={{ ...branch, latitude: parseFloat(latitude), longitude: parseFloat(longitude) }}
             currentPosition={null}
@@ -440,7 +442,7 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
             <ActivityIndicator size="small" color="#fff" />
           ) : (
             <Text style={styles.submitButtonText}>
-              {branch ? 'Guardar Cambios' : 'Crear Sucursal'}
+              {branch ? t('branchForm.saveChanges'): t('branchForm.createBranch')}
             </Text>
           )}
         </TouchableOpacity> : <></>
@@ -451,7 +453,7 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
       component: (
         isEditing?
         <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
-          <Text style={styles.cancelButtonText}>Cancelar</Text>
+          <Text style={styles.cancelButtonText}>{t('branchForm.cancel')}</Text>
         </TouchableOpacity>: <></>
       ),
     },
@@ -488,8 +490,8 @@ export const BranchForm: React.FC<BranchFormProps> = ({ branch, onClose }) => {
 
     <CustomAlert
               isVisible={showAlert}
-              title="Eliminar Sucursal"
-              message="¿Estás seguro de eliminar esta sucursal y todas sus promociones asociadas?"
+              title={t('branchForm.deleteBranch')}
+              message={t('branchForm.deleteConfirm')}
               onCancel={handleCancel}
               onConfirm={handleConfirm}
             />
