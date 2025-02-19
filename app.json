@@ -2,7 +2,7 @@
   "expo": {
     "name": "kupzilla-asociated",
     "slug": "kupzilla-asociated",
-    "version": "1.0.3",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -50,7 +50,6 @@
     },
     "plugins": [
       [
-        
         "expo-font",
         {
           "fonts": [
@@ -82,7 +81,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "1205430d-057b-46b0-a1fc-bb96f264350e"
+        "projectId": "af0043e0-ce91-43f7-b762-3a7460ddf7f0"
       }
     }
   }
