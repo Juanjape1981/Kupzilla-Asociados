@@ -21,7 +21,7 @@ import MapSingle from '../components/MapSingle';
 import ErrorModal from '../components/ErrorModal';
 import ExitoModal from '../components/ExitoModal';
 import Loader from '../components/Loader';
-import { encryptId } from '../utils/encrypt';
+import { decryptIds, encryptIds } from '../utils/encrypt';
 import colors from '../config/colors';
 import { useTranslation } from 'react-i18next';
 
@@ -50,7 +50,7 @@ const PromotionDetailScreen: React.FC = () => {
   const [newRating, setNewRating] = useState<number>(0);
   const [newComment, setNewComment] = useState<string>('');
   const ratings = useSelector(getMemoizedBranchRatingsWithMetadata);
-  const user = useSelector(getMemoizedUserData); 
+  const user = useSelector(getMemoizedUserData);
   const [modalMessage, setModalMessage] = useState('');
   const [modalErrorVisible, setModalErrorVisible] = useState(false);
   const [modalSuccessVisible, setModalSuccessVisible] = useState(false);
@@ -59,18 +59,23 @@ const PromotionDetailScreen: React.FC = () => {
   const { t } = useTranslation();
   // console.log("newRating",newRating);
   // console.log("newComment",newComment);
+  //ERR: Ajustar para que cargue desde una imagen desde backend
   const promoImage = promotion.images.length > 0 ? `${API_URL}${promotion.images[0].image_path}` : 'https://res.cloudinary.com/dbwmesg3e/image/upload/v1721157537/TurismoApp/no-product-image-400x400_1_ypw1vg_sw8ltj.png';
 
   // console.log("ratings en descripcion ",ratings);
   // console.log("branch en descripcion ",branch);
   useEffect(() => {
-    if(!QR && promotion){
-      const QRencrypt = generateQRCodeValue(promotion.promotion_id)
+    if (!QR && promotion && user) {
+      const QRencrypt = generateQRCodeValue(promotion?.promotion_id, user?.user_id, user?.email)
       setQR(QRencrypt)
     }
   }, [promotion]);
-  const generateQRCodeValue = (id: number) => {
-    const hashedId = encryptId(id);
+  const generateQRCodeValue = (promotionId: number, userId: number, email: string)=> {
+    const hashedId = encryptIds(promotionId, userId, email);
+
+    console.log("codigo desencriptado", decryptIds(hashedId));
+    
+    //ERR: Ajustar para que use parametro de configuración
     const appLink = `https://www.kupzilla.com/PromotionDetail/${hashedId}`;
     console.log(appLink);
     return appLink;
@@ -174,18 +179,7 @@ const PromotionDetailScreen: React.FC = () => {
     setModalMessage(message);
     setModalErrorVisible(true);
   };
-  // Función para encriptar el ID usando AES y una clave secreta
-// const encryptId = (id: any): string => {
-//   const secretKey = process.env.EXPO_PUBLIC_API_SECRET_KEY;
-//   if (!secretKey) {
-//     throw new Error("La clave secreta no está definida en las variables de entorno.");
-//   }
-//   const idString = id.toString();
-//   // Encriptar el ID
-//   const encrypted = CryptoES.AES.encrypt(idString, secretKey);
-//   // Devolver el resultado en formato string
-//   return encrypted.toString().replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '.');
-// };
+
   const renderStars = (rating: number) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -206,7 +200,7 @@ const PromotionDetailScreen: React.FC = () => {
       <Image source={{ uri: `${API_URL}${item.image_path}` }} style={styles.carouselImage} onLoadStart={handleImageLoadStart} onLoadEnd={handleImageLoadEnd} />
     </View>
   );
-  
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -214,7 +208,7 @@ const PromotionDetailScreen: React.FC = () => {
           <MaterialIcons name="arrow-back-ios-new" size={24} color={colors.primary} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.shareButton} onPress={handleShare}>
-          <MaterialCommunityIcons name="share-variant" size={24} color={colors.primary }/>
+          <MaterialCommunityIcons name="share-variant" size={24} color={colors.primary} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.favoriteButton} onPress={() => handleFavoritePress(promotion)}>
           <MaterialCommunityIcons name={isFavorite(promotion.promotion_id) ? 'cards-heart' : 'cards-heart-outline'} size={24} color={colors.primary} />
@@ -232,19 +226,19 @@ const PromotionDetailScreen: React.FC = () => {
         onLoadEnd={handleImageLoadEnd}
       />
       <View style={styles.thumbnailsContainer}>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {promotion.images.length > 1 &&
-          promotion.images.slice(1).map((item) => (
-            <TouchableOpacity key={item.image_id} onPress={() => openModal(item.image_path)}>
-              {loading && (
-                <View style={styles.loader}>
-                  <ActivityIndicator size="large" color={colors.circles2} />
-                </View>
-              )}
-              <Image source={{ uri: `${API_URL}${item.image_path}` }} style={styles.thumbnail} onLoadStart={handleImageLoadStart} onLoadEnd={handleImageLoadEnd} />
-            </TouchableOpacity>
-          ))
-        }
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {promotion.images.length > 1 &&
+            promotion.images.slice(1).map((item) => (
+              <TouchableOpacity key={item.image_id} onPress={() => openModal(item.image_path)}>
+                {loading && (
+                  <View style={styles.loader}>
+                    <ActivityIndicator size="large" color={colors.circles2} />
+                  </View>
+                )}
+                <Image source={{ uri: `${API_URL}${item.image_path}` }} style={styles.thumbnail} onLoadStart={handleImageLoadStart} onLoadEnd={handleImageLoadEnd} />
+              </TouchableOpacity>
+            ))
+          }
         </ScrollView>
       </View>
 
@@ -285,12 +279,12 @@ const PromotionDetailScreen: React.FC = () => {
         <Text style={styles.description}>{promotion.description}</Text>
         <View style={styles.qrCode}>
 
-          { QR ?<QRCode
+          {QR ? <QRCode
             value={QR}
             size={screenWidth * 0.5}
             color={colors.secondary}
             backgroundColor="white"
-          />: <Loader></Loader>}
+          /> : <Loader></Loader>}
           <Text style={styles.dates}>{t('promotionDetail.validity')}</Text>
           <View style={styles.dates2}>
             <Text style={styles.dates}>{t('promotionDetail.from')} {promotion.start_date}</Text>
@@ -319,7 +313,7 @@ const PromotionDetailScreen: React.FC = () => {
           </View>
         )}
       </View>
-   
+
       {/* Sección de valoraciones */}
       <View style={styles.ratingsContainer}>
         <Text style={styles.sectionTitle}>{t('promotionDetail.ratings')}</Text>
@@ -351,7 +345,7 @@ const PromotionDetailScreen: React.FC = () => {
           placeholder={t('promotionDetail.shareExperience')}
           value={newComment}
           onChangeText={setNewComment}
-          
+
         />
         <TouchableOpacity style={styles.button} onPress={handleAddRating}>
           <Text style={styles.buttonText}>{t('promotionDetail.sendRating')}</Text>
@@ -365,8 +359,8 @@ const PromotionDetailScreen: React.FC = () => {
       <ExitoModal
         visible={modalSuccessVisible}
         message={modalSuccessMessage}
-        onClose={() => {setModalSuccessVisible(false)}}
-        />
+        onClose={() => { setModalSuccessVisible(false) }}
+      />
     </ScrollView>
   );
 };
@@ -530,7 +524,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color:colors.primary,
+    color: colors.primary,
     marginBottom: 10,
     textAlign: 'center',
   },
@@ -611,7 +605,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   button: {
-    backgroundColor:colors.primary,
+    backgroundColor: colors.primary,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',

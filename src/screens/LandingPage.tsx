@@ -108,10 +108,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  // floatingImage: {
-  //   position: 'absolute',
-  //   opacity: 0.6,
-  // },
   logoContainer: {
     position: 'absolute',
     zIndex:-1,

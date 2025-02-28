@@ -2,7 +2,7 @@
   "expo": {
     "name": "kupzilla-asociated",
     "slug": "kupzilla-asociated",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -36,7 +36,7 @@
         "android.permission.ACCESS_FINE_LOCATION"
       ],
       "package": "com.kupzilla.asociated",
-      "versionCode": 3,
+      "versionCode": 7,
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyAyn6WPUaMwF-7bqGw3-swrSUp4t9lC0wo"

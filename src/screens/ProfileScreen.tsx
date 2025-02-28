@@ -27,7 +27,6 @@ import { loadData } from '../redux/actions/dataLoader';
 import DatePickerInput from '../components/DatePickerInput';
 import colors from '../config/colors';
 import { useTranslation } from 'react-i18next';
-import { translateGender } from '../utils/translateGender';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
@@ -91,6 +90,19 @@ const ProfileScreen: React.FC = () => {
   const [modalSuccessMessage, setModalSuccessMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation();
+
+  const getTranslatedGender = (gender: string) => {
+    if (!gender) {
+      return t('profile.not_specified');
+    }
+    if (gender === 'Masculino') {
+      return t('profile.male');
+    }
+    if (gender === 'Femenino') {
+      return t('profile.female');
+    }
+    return gender;
+  };
 
   // console.log(loading);
   // console.log(formData);
@@ -323,7 +335,7 @@ const ProfileScreen: React.FC = () => {
             >
               <View style={styles.passFormCont2}>
                 <View style={styles.passForm}>
-                  <Text style={styles.buttonTextpass}>{t('profile.updatePassword')}</Text>
+                  <Text style={styles.buttonTextpass}>{t('profile.update_password')}</Text>
                   <View style={styles.passwordContainer}>
                     <TextInput
                     style={styles.inputPassword}
@@ -473,36 +485,6 @@ const ProfileScreen: React.FC = () => {
               <View style={styles.container}>
                 <DatePickerInput selectedDate={selectedDate} onDateChange={handleInputChange} />
               </View>
-              {/* <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.inputdate}>
-                <Text style={styles.textDate}>
-                  {selectedDate ? selectedDate.toLocaleDateString() : 'Fecha de Nacimiento (DD-MM-YYYY)'}
-                </Text>
-              </TouchableOpacity>
-              {showDatePicker && (
-                <Modal
-                  transparent
-                  animationType="slide"
-                  visible={showDatePicker}
-                  onRequestClose={() => setShowDatePicker(false)} // Cerrar con back en Android
-                >
-                  <View style={styles.modalOverlay}>
-                    <View style={styles.datePickerContainer}>
-                      <DateTimePicker
-                        value={selectedDate || new Date()}
-                        mode="date"
-                        display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-                        maximumDate={new Date()}
-                        onChange={handleDateChange}
-                      />
-                      {Platform.OS === 'ios' && (
-                        <TouchableOpacity onPress={confirmDate} style={styles.confirmButton}>
-                          <Text style={styles.confirmButtonText}>Confirmar fecha</Text>
-                        </TouchableOpacity>
-                      )}
-                    </View>
-                  </View>
-                </Modal>
-              )} */}
                   <View style={styles.pickerContainer}>
                     <RNPickerSelect
                       onValueChange={(value) => handleInputChange('gender', value)}
@@ -542,15 +524,16 @@ const ProfileScreen: React.FC = () => {
             </>
           ) : (
             <View style={styles.Containertext}>
-              <Text style={styles.text}>{formData.first_name} {formData.last_name}</Text>
-              <Text style={styles.text}>{formData.email}</Text>
-              <Text style={styles.text}>{formData.country}, {formData.city}</Text>
-              <Text style={styles.text}>{formData.phone_number}</Text>
-              <Text style={styles.text}>{formData.address}</Text>
-              <Text style={styles.text}>{formData.contact_info}</Text>
-              <Text style={styles.text}>{formData.business_type}</Text>
-              <Text style={styles.text}>{formData.birth_date ? formatDateToDDMMYYYY(formData.birth_date) : t('profile.date_of_birth')}</Text>
-              <Text style={styles.text}>{translateGender(formData.gender)}</Text>
+              <Text style={styles.text}>{formData?.first_name} {formData.last_name}</Text>
+              <Text style={styles.text}>{formData?.email}</Text>
+              {/* getTranslatedGender() porfuera rompe */}
+              <Text style={styles.text}>{getTranslatedGender(formData?.gender)}</Text>
+              <Text style={styles.text}>{formData?.birth_date ? formatDateToDDMMYYYY(formData.birth_date) : t('profile.date_of_birth')}</Text>
+              <Text style={styles.text}>{formData?.country}, {formData.city}</Text>
+              <Text style={styles.text}>{formData?.phone_number}</Text>
+              <Text style={styles.text}>{formData?.address}</Text>
+              <Text style={styles.text}>{formData?.contact_info|| t('formComponent.notSpecified')}</Text>
+              <Text style={styles.text}>{formData?.business_type|| t('formComponent.notSpecified')}</Text>
             </View>
           )}
           <Modal visible={isCategoriesModalVisible} animationType="slide" transparent>
@@ -689,7 +672,7 @@ const styles = StyleSheet.create({
   inputPassword: {
     minHeight:48,
     flex: 1,
-    fontSize: 14,
+    fontSize: screenWidth*0.037,
   },
   inputPass:{
     height: 48,
@@ -700,7 +683,7 @@ const styles = StyleSheet.create({
     marginTop:10,
     paddingHorizontal: 15,
     backgroundColor: '#fff',
-    fontSize: 16,
+    fontSize: screenWidth*0.037,
   },
   passForm:{
     display:'flex',
@@ -746,7 +729,6 @@ const styles = StyleSheet.create({
     width:48,
     bottom:0,
     right:40,
-    // marginTop:20,
     margin:4,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,
@@ -761,7 +743,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     backgroundColor: '#fff',
-    fontSize: 16,
+    fontSize: screenWidth*0.04,
   },
   input: {
     height: 48,
@@ -772,7 +754,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 15,
     backgroundColor: '#fff',
-    fontSize: 16,
+    fontSize: screenWidth*0.04,
   },
   image: {
     width: 120,

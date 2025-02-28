@@ -38,48 +38,48 @@ const AllBranchesScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { t } = useTranslation();
 
-// console.log("sucursales",branches);
-const handleRefresh = async () => {
-  setIsRefreshing(true);
-  try {
-    setIsLoading(true);
-    await dispatch(fetchAllBranches());
-    // await dispatch(fetchPromotions());
-  } catch (error) {
-    console.error('Error al recargar las sucursales:', error);
-  } finally {
-    setIsLoading(false);
-    setIsRefreshing(false);
-  }
-};
-useEffect(() => {
-  const loadBranches = async () => {
-    // console.log("Carga inicial de sucursales");
-    setIsLoading(true);
-    await dispatch(fetchAllBranches());
-    setIsLoading(false);
+  // console.log("sucursales",branches);
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    try {
+      setIsLoading(true);
+      await dispatch(fetchAllBranches());
+      // await dispatch(fetchPromotions());
+    } catch (error) {
+      console.error('Error al recargar las sucursales:', error);
+    } finally {
+      setIsLoading(false);
+      setIsRefreshing(false);
+    }
   };
-
-  loadBranches();
-}, [dispatch]);
-
-useFocusEffect(
-  React.useCallback(() => {
+  useEffect(() => {
     const loadBranches = async () => {
-      // console.log("Actualización al enfocar la pantalla");
+      // console.log("Carga inicial de sucursales");
       setIsLoading(true);
       await dispatch(fetchAllBranches());
       setIsLoading(false);
     };
+
     loadBranches();
-  }, [dispatch])
-);
+  }, [dispatch]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const loadBranches = async () => {
+        // console.log("Actualización al enfocar la pantalla");
+        setIsLoading(true);
+        await dispatch(fetchAllBranches());
+        setIsLoading(false);
+      };
+      loadBranches();
+    }, [dispatch])
+  );
 
   useEffect(() => {
     let filtered = branches;
 
     if (nameFilter) {
-      if(nameFilter.length > 30){
+      if (nameFilter.length > 30) {
         setModalErrorMessage(t('allBranches.nameMaxLengthError'))
         setModalErrorVisible(true)
         return
@@ -90,7 +90,7 @@ useFocusEffect(
     }
 
     if (addressFilter) {
-      if(addressFilter.length > 50){
+      if (addressFilter.length > 50) {
         setModalErrorMessage(t('allBranches.addressMaxLengthError'))
         setModalErrorVisible(true)
         return
@@ -113,13 +113,13 @@ useFocusEffect(
 
   return (
     <ScrollView style={styles.container}
-    refreshControl={
-      <RefreshControl
-        refreshing={isRefreshing}
-        onRefresh={handleRefresh}
-        colors={[colors.primary]}
-      />
-    }>
+      refreshControl={
+        <RefreshControl
+          refreshing={isRefreshing}
+          onRefresh={handleRefresh}
+          colors={[colors.primary]}
+        />
+      }>
       <SemicirclesOverlay />
       <View style={styles.container2}>
         <View style={styles.filterContainer}>
@@ -139,41 +139,41 @@ useFocusEffect(
               onChangeText={(text) => setAddressFilter(text)}
               placeholder={t('allBranches.searchByAddress')}
             />
-            <MaterialCommunityIcons name="store-marker-outline" size={24} color={colors.inputBorder05}  style={styles.inputIcon} />
+            <MaterialCommunityIcons name="store-marker-outline" size={24} color={colors.inputBorder05} style={styles.inputIcon} />
           </View>
         </View>
 
-        
+
         <View style={styles.branchesList}>
-          {isLoading? <Loader></Loader> : 
-          (filteredBranches.length > 0 ? (
-            filteredBranches.map(branch => (
-              <TouchableOpacity 
-                key={branch.branch_id} 
-                style={styles.branchItem}
-                onPress={() => handleBranchPress(branch)}
-              >
-                <View style={styles.branchInfo}>
-                  <Text style={styles.branchTitle}>{branch.name}</Text>
-                {branch.image_url?
-                  <Image
-                    source={{ uri: `${API_URL}${branch.image_url}` }}
-                    style={styles.branchImage}
-                    alt={branch.name}
-                  />:
-                  <Image
-                    source={require('../../assets/noimage.png')}
-                    style={styles.branchImage}
-                    alt={branch.name}
-                  />
-                }
-                </View>
+          {isLoading ? <Loader></Loader> :
+            (filteredBranches.length > 0 ? (
+              filteredBranches.map(branch => (
+                <TouchableOpacity
+                  key={branch.branch_id}
+                  style={styles.branchItem}
+                  onPress={() => handleBranchPress(branch)}
+                >
+                  <View style={styles.branchInfo}>
+                    <Text style={styles.branchTitle}>{branch.name}</Text>
+                    {branch.image_url ?
+                      <Image
+                        source={{ uri: `${API_URL}${branch.image_url}` }}
+                        style={styles.branchImage}
+                        alt={branch.name}
+                      /> :
+                      <Image
+                        source={require('../../assets/noimage.png')}
+                        style={styles.branchImage}
+                        alt={branch.name}
+                      />
+                    }
+                  </View>
                   <Text style={styles.branchAddress}>{branch.address}</Text>
-              </TouchableOpacity>
-            ))
-          ) : (
-            <Text>No se encontraron sucursales.</Text>
-          ))}
+                </TouchableOpacity>
+              ))
+            ) : (
+              <Text>{t('allBranches.noBranchesFound')}</Text>
+            ))}
         </View>
       </View>
       <ErrorModal
@@ -228,8 +228,8 @@ const styles = StyleSheet.create({
     // marginBottom: 10,
     borderRadius: 5,
     width: '100%',
-    
-    alignSelf:'center',
+
+    alignSelf: 'center',
     padding: 8,
     backgroundColor: '#fff',
     marginBottom: 5,
@@ -238,25 +238,25 @@ const styles = StyleSheet.create({
   },
   branchInfo: {
     flex: 1,
-    flexDirection:'row',
-    width:'100%',
+    flexDirection: 'row',
+    width: '100%',
     marginBottom: 10,
   },
   branchTitle: {
-    width:'70%',
-    fontSize: width*0.05,
+    width: '70%',
+    fontSize: width * 0.05,
     fontWeight: 'bold',
-    color:colors.primary
+    color: colors.primary
   },
   branchAddress: {
-    fontSize: width*0.03,
-    color:'#333',
-    width:'100%'
+    fontSize: width * 0.03,
+    color: '#333',
+    width: '100%'
     // fontWeight: 'bold',
   },
   branchImage: {
-    width:'30%',
-    borderRadius:5,
+    width: '30%',
+    borderRadius: 5,
     // width: 70,
     // height: 40,
   },

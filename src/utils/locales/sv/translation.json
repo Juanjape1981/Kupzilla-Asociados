@@ -1,45 +1,60 @@
 {
-  
-  "navBar":{
+  "navBar": {
     "greeting": "Hej",
     "profile": "Profil",
     "logout": "Logga ut",
     "language": "Språk"
   },
-    "languageSelector": {
+  "languageSelector": {
     "chooseLanguage": "Välj ett språk"
   },
-    "landing": {
-      "readyToEnjoy": "Är du redo att njuta",
-      "cobquecura": "Cobquecura",
-      "andTheBest": "de bästa",
-      "promotions": "kampanjer?",
-      "enjoyDiscountsHere": "Njut av rabatterna här"
-    },
-    "login": {
-      "emailPlaceholder": "E-post",
-      "passwordPlaceholder": "Lösenord",
-      "forgotPassword": "Glömde du ditt lösenord?",
-      "login": "Logga in",
-      "noAccount": "Har du inget konto?",
-      "register": "Registrera",
-      "close": "Stäng",
-      "associates": "ASSOCIERADE",
-      "version": "Version"
-    },
-    "qrScanner": {
-      "invalidUser": "Endast aktiva användare kan skannas.",
-      "scanQRButton": "Skanna QR",
-      "consumptionsButton": "Förbrukningar",
-      "invalidCode":"Ogiltig QR-kod",
-      "scanQRCode": "Du måste skanna QR-koden för den legitimation som gör konsumtionen.",
-      "permissionAlert": {
-      "title": "Kamerabehörighet krävs",
-      "message": "Kameratillgång krävs för att skanna QR-koden.",
-      "requestPermission": "Begär behörighet",
-      "cancel": "Avbryt",
-      "permissionDenied": "Behörighet nekad",
-      "goToSettings": "Aktivera kamerabehörighet i inställningarna."
+  "landing": {
+    "readyToEnjoy": "Är du redo att njuta",
+    "cobquecura": "Cobquecura",
+    "andTheBest": "de bästa",
+    "promotions": "kampanjer?",
+    "enjoyDiscountsHere": "Njut av rabatterna här"
+  },
+  "login": {
+    "emailPlaceholder": "E-post",
+    "passwordPlaceholder": "Lösenord",
+    "forgotPassword": "Glömde du ditt lösenord?",
+    "login": "Logga in",
+    "noAccount": "Har du inget konto?",
+    "register": "Registrera",
+    "close": "Stäng",
+    "associates": "ASSOCIERADE",
+    "version": "Version",
+    "errorInactiveAssociate":"Inaktiv eller borttagen associerad",
+    "errorUnauthorizedRole": "Obehörig roll",
+    "errorGeneral": "Ett fel uppstod. Försök igen senare.",
+    "errorUserNotFound": "Användaren finns inte",
+    "errorInvalidPassword": "Ogiltigt lösenord",
+    "errorAlert": {
+      "title": "Fel",
+      "invalidEmailError": "Ange en giltig e-postadress.",
+      "invalidEmailMessage": "Hoppsan! Kontrollera din e-postadress igen.",
+      "inactiveAcconut": "Ditt konto är inaktivt. Kontakta support för mer information.",
+      "invalidRol": "Hoppsan! Det verkar som att du saknar behörighet att komma åt den här delen.",
+      "invalidPassword": "Ditt konto eller lösenord är felaktigt. Om du inte kommer ihåg lösenordet kan du återställa det nu."
+    }
+  },
+  "qrScanner": {
+    "invalidUser": "Endast aktiva användare kan skannas.",
+    "scanQRButton": "Skanna QR",
+    "consumptionsButton": "Förbrukningar",
+    "invalidCode": "Ogiltig QR-kod",
+    "scanQRCode": "Du måste skanna QR-koden för den legitimation som gör konsumtionen.",
+    "noPromotions": "Du har inga kampanjer tillgängliga eller pågående.",
+    "noPromotion": "Den skannade kampanjen tillhör inte din filial",
+    "noActivePromotion": "Kampanjen är inte aktiv för tillfället",
+    "permissionAlert": {
+    "title": "Kamerabehörighet krävs",
+    "message": "Kameratillgång krävs för att skanna QR-koden.",
+    "requestPermission": "Begär behörighet",
+    "cancel": "Avbryt",
+    "permissionDenied": "Behörighet nekad",
+    "goToSettings": "Aktivera kamerabehörighet i inställningarna."
     },
     "clientLabel": "Kund:",
     "noUserDetected": "Användare inte upptäckt",
@@ -60,7 +75,7 @@
       "title": "Fel",
       "message": "Misslyckades att registrera kampanjförbrukning. Försök igen.",
       "field": "Du måste fylla i alla fält.",
-      "dig":"Beloppet kan inte ha mer än 8 siffror.",
+      "dig": "Beloppet kan inte ha mer än 8 siffror.",
       "nomore1": "Du kan inte använda mer än ",
       "nomore2": " kampanjer."
     },
@@ -79,29 +94,29 @@
     "update_button": "Uppdatera",
     "later_button": "Senare"
   },
-    "register": {
-      "firstNamePlaceholder": "* Förnamn",
-      "lastNamePlaceholder": "* Efternamn",
-      "emailPlaceholder": "* E-post",
-      "cityPlaceholder": "Stad",
-      "phonePlaceholder": "Telefonnummer",
-      "birthDate": "Födelsedatum",
-      "genderPlaceholder": "Välj kön",
-      "specifyGenderPlaceholder": "Specificera kön",
-      "preferences": "Preferenser",
-      "selectPreferences": "Välj dina preferenser",
-      "close": "Stäng",
-      "passwordPlaceholder": "* Lösenord",
-      "confirmPasswordPlaceholder": "* Bekräfta lösenord",
-      "acceptTerms": "Acceptera villkor",
-      "register": "Registrera",
-      "back": "Tillbaka",
-      "termsAndConditions": "Villkor",
-      "male": "Man",
-      "female": "Kvinna",
-      "other": "Annat"
-    },
-    "branches": {
+  "register": {
+    "firstNamePlaceholder": "* Förnamn",
+    "lastNamePlaceholder": "* Efternamn",
+    "emailPlaceholder": "* E-post",
+    "cityPlaceholder": "Stad",
+    "phonePlaceholder": "Telefonnummer",
+    "birthDate": "Födelsedatum",
+    "genderPlaceholder": "Välj kön",
+    "specifyGenderPlaceholder": "Specificera kön",
+    "preferences": "Preferenser",
+    "selectPreferences": "Välj dina preferenser",
+    "close": "Stäng",
+    "passwordPlaceholder": "* Lösenord",
+    "confirmPasswordPlaceholder": "* Bekräfta lösenord",
+    "acceptTerms": "Acceptera villkor",
+    "register": "Registrera",
+    "back": "Tillbaka",
+    "termsAndConditions": "Villkor",
+    "male": "Man",
+    "female": "Kvinna",
+    "other": "Annat"
+  },
+  "branches": {
     "branch": "Filial",
     "create_branch": "Skapa filial",
     "branch_status": "Filial",
@@ -111,61 +126,61 @@
     "error_message": "Det uppstod ett fel vid avaktivering av filialen"
   },
   "branchForm": {
-  "name": "Filialnamn",
-  "placeholdername": "* Filialnamn",
-  "address": "Adress",
-  "description": "Beskrivning",
-  "placeholderDescription": "Filialbeskrivning",
-  "latitude": "Breddgrad",
-  "longitude": "Längdgrad",
-  "useCurrentLocation": "Använd min nuvarande plats",
-  "chooseLocation": "Välj filialens plats på kartan",
-  "deleteBranch": "Ta bort filial",
-  "deleteConfirm": "Är du säker på att du vill ta bort denna filial?",
-  "success": "Filialen uppdaterades framgångsrikt",
-  "error": "Det uppstod ett fel vid uppdatering av filialen",
-  "successDelete": "Filialen raderades framgångsrikt",
-  "errorDelete": "Det uppstod ett fel vid radering av filialen",
-  "saveChanges": "Spara ändringar",
-  "createBranch": "Skapa filial",
-  "cancel": "Avbryt",
-  "locationPermissionDenied": "Behörighet att komma åt plats nekad",
-  "branchCreationSuccess": "Filialen har skapats framgångsrikt.",
-  "branchUpdateSuccess": "Filialen uppdaterades framgångsrikt",
-  "branchUpdateError": "Det uppstod ett problem vid uppdatering av filialen. Vänligen försök igen.",
-  "branchDeleteSuccess": "Filialen och dess kampanjer har tagits bort framgångsrikt.",
-  "branchDeleteError": "Det uppstod ett problem vid borttagning av filialen.",
-  "branchNameMismatch": "Filialnamnet stämmer inte.",
-  "locationFetchError": "Fel vid hämtning av plats.",
-  "maxNameLength": "Namnet får inte överskrida 30 tecken.",
-  "maxAddressLength": "Adressen får inte överskrida 50 tecken.",
-  "maxDescriptionLength": "Beskrivningen får inte överskrida 250 tecken.",
-  "missingFieldsError": "Följande fält är obligatoriska: ",
-  "missingName": "Namn",
-  "missingLocation": "Breddgrad och längdgrad"
-},
+    "name": "Filialnamn",
+    "placeholdername": "* Filialnamn",
+    "address": "Adress",
+    "description": "Beskrivning",
+    "placeholderDescription": "Filialbeskrivning",
+    "latitude": "Breddgrad",
+    "longitude": "Längdgrad",
+    "useCurrentLocation": "Använd min nuvarande plats",
+    "chooseLocation": "Välj filialens plats på kartan",
+    "deleteBranch": "Ta bort filial",
+    "deleteConfirm": "Är du säker på att du vill ta bort denna filial?",
+    "success": "Filialen uppdaterades framgångsrikt",
+    "error": "Det uppstod ett fel vid uppdatering av filialen",
+    "successDelete": "Filialen raderades framgångsrikt",
+    "errorDelete": "Det uppstod ett fel vid radering av filialen",
+    "saveChanges": "Spara ändringar",
+    "createBranch": "Skapa filial",
+    "cancel": "Avbryt",
+    "locationPermissionDenied": "Behörighet att komma åt plats nekad",
+    "branchCreationSuccess": "Filialen har skapats framgångsrikt.",
+    "branchUpdateSuccess": "Filialen uppdaterades framgångsrikt",
+    "branchUpdateError": "Det uppstod ett problem vid uppdatering av filialen. Vänligen försök igen.",
+    "branchDeleteSuccess": "Filialen och dess kampanjer har tagits bort framgångsrikt.",
+    "branchDeleteError": "Det uppstod ett problem vid borttagning av filialen.",
+    "branchNameMismatch": "Filialnamnet stämmer inte.",
+    "locationFetchError": "Fel vid hämtning av plats.",
+    "maxNameLength": "Namnet får inte överskrida 30 tecken.",
+    "maxAddressLength": "Adressen får inte överskrida 50 tecken.",
+    "maxDescriptionLength": "Beskrivningen får inte överskrida 250 tecken.",
+    "missingFieldsError": "Följande fält är obligatoriska: ",
+    "missingName": "Namn",
+    "missingLocation": "Breddgrad och längdgrad"
+  },
   "promotions": {
-  "searchPromotions": "Sök kampanjer",
-  "keyword": "Nyckelord",
-  "start": "Start",
-  "end": "Slut",
-  "categories": "Kategorier",
-  "filters": "Kupongfilter",
-  "noPreferencesFound": "Kampanjer baserade på dina preferenser",
-  "morePreferences": "Visa baserat på mina preferenser...",
-  "otherPromotions": "Andra kampanjer",
-  "viewAll": "visa alla...",
-  "applyCategories": "Tillämpa kategorier",
-  "close": "Stäng",
-  "clear": "Rensa",
-  "categoriesModal": "Kategorier",
-  "confirmStartDate": "Bekräfta startdatum",
-  "confirmEndDate": "Bekräfta slutdatum",
-  "create": "Skapa",
-  "firstCreateBranch": "Du måste först skapa en filial",
-  "noPromotionsCreated": "Inga kampanjer skapade."
-},
-"promotionForm": {
+    "searchPromotions": "Sök kampanjer",
+    "keyword": "Nyckelord",
+    "start": "Start",
+    "end": "Slut",
+    "categories": "Kategorier",
+    "filters": "Kupongfilter",
+    "noPreferencesFound": "Kampanjer baserade på dina preferenser",
+    "morePreferences": "Visa baserat på mina preferenser...",
+    "otherPromotions": "Andra kampanjer",
+    "viewAll": "visa alla...",
+    "applyCategories": "Tillämpa kategorier",
+    "close": "Stäng",
+    "clear": "Rensa",
+    "categoriesModal": "Kategorier",
+    "confirmStartDate": "Bekräfta startdatum",
+    "confirmEndDate": "Bekräfta slutdatum",
+    "create": "Skapa",
+    "firstCreateBranch": "Du måste först skapa en filial",
+    "noPromotionsCreated": "Inga kampanjer skapade."
+  },
+  "promotionForm": {
     "titlePlaceholder": "Titel",
     "descriptionPlaceholder": "Beskrivning",
     "discountPercentagePlaceholder": "* Rabattsats (0-99)",
@@ -183,15 +198,15 @@
     "error": "Vänligen fyll i alla fält",
     "success": "Kampanjen har skapats framgångsrikt.",
     "partnerError": "Kunde inte hämta partner- eller filial-ID. Vänligen försök igen.",
-    "max_images":"No se pueden agregar más de 6 imágenes.",
-    "categories":"Kategorier",
+    "max_images": "No se pueden agregar más de 6 imágenes.",
+    "categories": "Kategorier",
     "createError": "Det uppstod ett problem med att uppdatera kampanjen. Försök igen.",
-    "enddatepost":"Slutdatumet måste vara efter startdatumet.",
-    "enddate":"Slutdatumet måste vara efter startdatumet.",
-    "title_length":"Titeln får inte överstiga 45 tecken.",
-    "available_quantity_limit":"Den tillgängliga mängden får inte överstiga 8 tecken.",
-    "quantity_greater_than_zero":"Mängden måste vara större än 0."
-},
+    "enddatepost": "Slutdatumet måste vara efter startdatumet.",
+    "enddate": "Slutdatumet måste vara efter startdatumet.",
+    "title_length": "Titeln får inte överstiga 45 tecken.",
+    "available_quantity_limit": "Den tillgängliga mängden får inte överstiga 8 tecken.",
+    "quantity_greater_than_zero": "Mängden måste vara större än 0."
+  },
   "sidebar": {
     "profile": "Profil",
     "favorites": "Favoriter",
@@ -200,7 +215,6 @@
     "map": "Karta",
     "legal": "Juridisk",
     "logout": "Logga ut",
-    
     "settings": "Inställningar"
   },
   "favoritesScreen": {
@@ -243,6 +257,7 @@
     "viewCategories": "Visa kategorier",
     "updateData": "Uppdatera data",
     "close": "Stäng",
+    "notSpecified":"Ej specificerad",
     "editCategories": "Redigera kategorier",
     "saveCategories": "Spara kategorier",
     "cancel": "Avbryt"
@@ -294,8 +309,8 @@
     "errorEndDateBeforeToday": "Slutdatumet kan inte vara tidigare än idag.",
     "promotionIdError": "Inget kampanj-ID",
     "updateError": "Ett problem uppstod när kampanjen skulle uppdateras. Försök igen.",
-    "max_images":"No se pueden agregar más de 6 imágenes.",
-    "requiered":"Följande fält är obligatoriska:"
+    "max_images": "No se pueden agregar más de 6 imágenes.",
+    "requiered": "Följande fält är obligatoriska:"
   },
   "allBranches": {
     "searchByName": "Sök efter namn",
@@ -372,24 +387,24 @@
     "input_error_50": "Får inte överskrida 50 tecken.",
     "input_error_25": "Får inte överskrida 25 tecken.",
     "confirm_password_required": "Vänligen bekräfta ditt nya lösenord.",
-  "passwords_do_not_match": "Det nya lösenordet och bekräftelsen matchar inte."
+    "passwords_do_not_match": "Det nya lösenordet och bekräftelsen matchar inte."
   },
   "tabs": {
-  "qrScanner": "QR-skanner",
-  "settings": "Inställningar",
-  "promotions": "Erbjudanden",
-  "branch": "Filial",
-  "recommend": "Rekommendera",
-  "profile": "Profil"
-},
-"branchDetails": {
-  "permissionDenied": "Åtkomst nekad",
-  "permissionMessage": "Platsåtkomst krävs för att visa din aktuella plats.",
-  "scanToView": "Skanna för att se filialen:",
-  "addressTitle": "Adress:",
-  "goBack": "Tillbaka"
-} ,
-"promotionDetail": {
+    "qrScanner": "QR-skanner",
+    "settings": "Inställningar",
+    "promotions": "Erbjudanden",
+    "branch": "Filial",
+    "recommend": "Rekommendera",
+    "profile": "Profil"
+  },
+  "branchDetails": {
+    "permissionDenied": "Åtkomst nekad",
+    "permissionMessage": "Platsåtkomst krävs för att visa din aktuella plats.",
+    "scanToView": "Skanna för att se filialen:",
+    "addressTitle": "Adress:",
+    "goBack": "Tillbaka"
+  },
+  "promotionDetail": {
     "description": "Beskrivning",
     "validity": "Giltighet",
     "from": "Från",
@@ -410,21 +425,26 @@
     "loading": "Laddar...",
     "address": "Adress"
   },
-  "ErrorModal":{
+  "ErrorModal": {
     "errorTitle": "Fel",
     "closeButton": "Stäng"
   },
-  "ExitoModal":{
+  "ExitoModal": {
     "successTitle": "Framgång",
     "closeButton": "Stäng"
   },
-  "AlertModal":{
+  "AlertModal": {
     "title": "Varning",
     "cancel": "Avbryt",
     "confirm": "Bekräfta"
   },
   "callout": {
     "howToGetThere": "Hur tar man sig dit?"
+  },
+  "resetPassword": {
+    "noMatch": "Lösenorden matchar inte.",
+    "newPassword": "Nytt lösenord",
+    "confirmPassword": "Bekräfta lösenord",
+    "reset": "Återställ"
   }
 }
-  

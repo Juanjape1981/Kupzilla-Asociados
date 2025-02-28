@@ -1,9 +1,9 @@
 {
-  "navBar":{
+  "navBar": {
     "greeting": "Hello",
-  "profile": "Profile",
-  "logout": "Logout",
-  "language": "Language"
+    "profile": "Profile",
+    "logout": "Logout",
+    "language": "Language"
   },
   "languageSelector": {
     "chooseLanguage": "Choose a language"
@@ -24,22 +24,37 @@
     "register": "Register",
     "close": "Close",
     "associates": "ASSOCIATES",
-    "version": "Version"
+    "version": "Version",
+    "errorInactiveAssociate":"Inactive or deleted associate",
+    "errorUnauthorizedRole": "Unauthorized role",
+    "errorGeneral": "An error occurred. Please try again later.",
+    "errorUserNotFound":"User does not exist",
+    "errorInvalidPassword": "Invalid password",
+    "errorAlert": {
+      "title": "Error",
+      "invalidEmailError": "Please enter a valid email.",
+      "invalidEmailMessage": "Oops! Please check your email again.",
+      "inactiveAcconut": "Your account is inactive. Please contact support for more information.",
+      "invalidRol": "Oops! It looks like you don't have the specific role needed to access this section.",
+      "invalidPassword": "Your account or password is incorrect. If you don't remember your password, reset it now."
+    }
   },
   "qrScanner": {
     "invalidUser": "Only active users can be scanned.",
     "scanQRButton": "Scan QR",
     "consumptionsButton": "Consumptions",
-    "invalidCode":"Invalid QR Code",
+    "invalidCode": "Invalid QR Code",
     "scanQRCode": "You must scan the QR code of the credential making the consumption.",
+    "noPromotions": "You have no promotions available or in progress.",
+    "noPromotion": "The scanned promotion does not belong to your branch",
+    "noActivePromotion": "The promotion is not active at this time",
     "permissionAlert": {
-    "title": "Camera Permission Needed",
-    "message": "Camera access is required to scan the QR code.",
-    "requestPermission": "Request Permission",
-    "cancel": "Cancel",
-    "permissionDenied": "Permission Denied",
-    "goToSettings": "Please enable camera permission in settings."
-    
+      "title": "Camera Permission Needed",
+      "message": "Camera access is required to scan the QR code.",
+      "requestPermission": "Request Permission",
+      "cancel": "Cancel",
+      "permissionDenied": "Permission Denied",
+      "goToSettings": "Please enable camera permission in settings."
     },
     "clientLabel": "Client:",
     "noUserDetected": "User not detected",
@@ -59,14 +74,13 @@
     "errorAlert": {
       "title": "Error",
       "message": "Failed to register promotion consumption. Please try again.",
-      "field":"You must complete all fields.",
-      "dig":"The amount cannot have more than 8 digits.",
+      "field": "You must complete all fields.",
+      "dig": "The amount cannot have more than 8 digits.",
       "nomore1": "You cannot redeem more than ",
       "nomore2": " promotions.",
       "desc": "La descripción no puede exceder los 255 caracteres.",
       "dig15": "El monto no puede tener más de 15 dígitos."
     },
-    
     "termsModal": {
       "termsAccepted": "Terms Accepted",
       "termsNotAccepted": "Terms Not Accepted",
@@ -124,61 +138,61 @@
     "error_message": "There was an error deactivating the branch"
   },
   "branchForm": {
-  "name": "Branch Name",
-  "placeholdername": "* Branch Name",
-  "address": "Address",
-  "description": "Description",
-  "latitude": "Latitude",
-  "longitude": "Longitude",
-  "useCurrentLocation": "Use my current location",
-  "chooseLocation": "Choose the branch location on the map",
-  "deleteBranch": "Delete Branch",
-  "deleteConfirm": "Are you sure you want to delete this branch?",
-  "success": "Branch updated successfully",
-  "error": "There was an error updating the branch",
-  "successDelete": "Branch deleted successfully",
-  "errorDelete": "There was an error deleting the branch",
-  "placeholderDescription": "Branch description",
-  "saveChanges": "Save Changes",
-  "createBranch": "Create Branch",
-  "cancel": "Cancel",
-  "locationPermissionDenied": "Permission to access location denied",
-  "branchCreationSuccess": "The branch has been created successfully.",
-  "branchUpdateSuccess": "Branch updated successfully",
-  "branchUpdateError": "There was an issue updating the branch. Please try again.",
-  "branchDeleteSuccess": "The branch and its promotions have been deleted successfully.",
-  "branchDeleteError": "There was an issue deleting the branch.",
-  "branchNameMismatch": "The branch name does not match.",
-  "locationFetchError": "Error fetching location.",
-  "maxNameLength": "The name cannot exceed 30 characters.",
-  "maxAddressLength": "The address cannot exceed 50 characters.",
-  "maxDescriptionLength": "The description cannot exceed 250 characters.",
-  "missingFieldsError": "The following fields are required: ",
-  "missingName": "Name",
-  "missingLocation": "Latitude and Longitude"
-},
+    "name": "Branch Name",
+    "placeholdername": "* Branch Name",
+    "address": "Address",
+    "description": "Description",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "useCurrentLocation": "Use my current location",
+    "chooseLocation": "Choose the branch location on the map",
+    "deleteBranch": "Delete Branch",
+    "deleteConfirm": "Are you sure you want to delete this branch?",
+    "success": "Branch updated successfully",
+    "error": "There was an error updating the branch",
+    "successDelete": "Branch deleted successfully",
+    "errorDelete": "There was an error deleting the branch",
+    "placeholderDescription": "Branch description",
+    "saveChanges": "Save Changes",
+    "createBranch": "Create Branch",
+    "cancel": "Cancel",
+    "locationPermissionDenied": "Permission to access location denied",
+    "branchCreationSuccess": "The branch has been created successfully.",
+    "branchUpdateSuccess": "Branch updated successfully",
+    "branchUpdateError": "There was an issue updating the branch. Please try again.",
+    "branchDeleteSuccess": "The branch and its promotions have been deleted successfully.",
+    "branchDeleteError": "There was an issue deleting the branch.",
+    "branchNameMismatch": "The branch name does not match.",
+    "locationFetchError": "Error fetching location.",
+    "maxNameLength": "The name cannot exceed 30 characters.",
+    "maxAddressLength": "The address cannot exceed 50 characters.",
+    "maxDescriptionLength": "The description cannot exceed 250 characters.",
+    "missingFieldsError": "The following fields are required: ",
+    "missingName": "Name",
+    "missingLocation": "Latitude and Longitude"
+  },
   "promotions": {
-  "searchPromotions": "Search promotions",
-  "keyword": "Keyword",
-  "start": "Start",
-  "end": "End",
-  "categories": "Categories",
-  "filters": "Coupon filters",
-  "noPreferencesFound": "Promotions based on your preferences",
-  "morePreferences": "Show based on my preferences...",
-  "otherPromotions": "Other Promotions",
-  "viewAll": "view all...",
-  "applyCategories": "Apply categories",
-  "close": "Close",
-  "clear": "Clear",
-  "categoriesModal": "Categories",
-  "confirmStartDate": "Confirm start date",
-  "confirmEndDate": "Confirm end date",
-  "create": "Create",
-  "firstCreateBranch": "You must first create a branch",
-  "noPromotionsCreated": "No promotions created."
-},
-"promotionForm": {
+    "searchPromotions": "Search promotions",
+    "keyword": "Keyword",
+    "start": "Start",
+    "end": "End",
+    "categories": "Categories",
+    "filters": "Coupon filters",
+    "noPreferencesFound": "Promotions based on your preferences",
+    "morePreferences": "Show based on my preferences...",
+    "otherPromotions": "Other Promotions",
+    "viewAll": "view all...",
+    "applyCategories": "Apply categories",
+    "close": "Close",
+    "clear": "Clear",
+    "categoriesModal": "Categories",
+    "confirmStartDate": "Confirm start date",
+    "confirmEndDate": "Confirm end date",
+    "create": "Create",
+    "firstCreateBranch": "You must first create a branch",
+    "noPromotionsCreated": "No promotions created."
+  },
+  "promotionForm": {
     "titlePlaceholder": "Title",
     "descriptionPlaceholder": "Description",
     "discountPercentagePlaceholder": "* Discount percentage (0-99)",
@@ -196,15 +210,15 @@
     "error": "Please complete all fields",
     "success": "The promotion has been created successfully.",
     "partnerError": "Could not retrieve partner or branch ID. Please try again.",
-    "max_images":"No se pueden agregar más de 6 imágenes.",
-    "categories":"Categories",
+    "max_images": "No se pueden agregar más de 6 imágenes.",
+    "categories": "Categories",
     "createError": "There was a problem updating the promotion. Please try again.",
-    "enddatepost":"The end date must be after the start date.",
-    "enddate":"The end date must be after the start date.",
-    "title_length":"The title cannot exceed 45 characters.",
-    "available_quantity_limit":"The available quantity cannot exceed 8 characters.",
-    "quantity_greater_than_zero":"The quantity must be greater than 0."
-},
+    "enddatepost": "The end date must be after the start date.",
+    "enddate": "The end date must be after the start date.",
+    "title_length": "The title cannot exceed 45 characters.",
+    "available_quantity_limit": "The available quantity cannot exceed 8 characters.",
+    "quantity_greater_than_zero": "The quantity must be greater than 0."
+  },
   "sidebar": {
     "profile": "Profile",
     "favorites": "Favorites",
@@ -213,7 +227,6 @@
     "map": "Map",
     "legal": "Legal",
     "logout": "Log out",
-    
     "settings": "Settings"
   },
   "favoritesScreen": {
@@ -256,6 +269,7 @@
     "viewCategories": "View Categories",
     "updateData": "Update Data",
     "close": "Close",
+    "notSpecified":"Not specified",
     "editCategories": "Edit Categories",
     "saveCategories": "Save Categories",
     "cancel": "Cancel"
@@ -307,8 +321,8 @@
     "errorTitleLength": "The title cannot exceed 45 characters.",
     "promotionIdError": "No promotion ID",
     "updateError": "There was a problem updating the promotion. Please try again.",
-    "max_images":"No se pueden agregar más de 6 imágenes.",
-    "requiered":"The following fields are required:"
+    "max_images": "No se pueden agregar más de 6 imágenes.",
+    "requiered": "The following fields are required:"
   },
   "allBranches": {
     "searchByName": "Search by name",
@@ -327,7 +341,7 @@
     "delete_confirmation": "Are you sure you want to delete this promotion?",
     "yes": "Yes",
     "no": "No"
-  }, 
+  },
   "profile": {
     "change_password": "Change your password",
     "current_password": "Current Password",
@@ -372,27 +386,27 @@
     "password_change_success": "Password changed successfully",
     "password_change_error": "Error changing password",
     "input_error_30": "Must not exceed 30 characters.",
-  "input_error_50": "Must not exceed 50 characters.",
-  "input_error_25": "Must not exceed 25 characters.",
-  "confirm_password_required": "Please confirm your new password.",
-  "passwords_do_not_match": "The new password and confirmation do not match."
+    "input_error_50": "Must not exceed 50 characters.",
+    "input_error_25": "Must not exceed 25 characters.",
+    "confirm_password_required": "Please confirm your new password.",
+    "passwords_do_not_match": "The new password and confirmation do not match."
   },
   "tabs": {
-  "qrScanner": "QR Scanner",
-  "settings": "Settings",
-  "promotions": "Promotions",
-  "branch": "Branch",
-  "recommend": "Recommend",
-  "profile": "Profile"
-},
-"branchDetails": {
-  "permissionDenied": "Permission denied",
-  "permissionMessage": "Location permission is required to show your current location.",
-  "scanToView": "Scan to view the branch:",
-  "addressTitle": "Address:",
-  "goBack": "Go back"
-},
-"promotionDetail": {
+    "qrScanner": "QR Scanner",
+    "settings": "Settings",
+    "promotions": "Promotions",
+    "branch": "Branch",
+    "recommend": "Recommend",
+    "profile": "Profile"
+  },
+  "branchDetails": {
+    "permissionDenied": "Permission denied",
+    "permissionMessage": "Location permission is required to show your current location.",
+    "scanToView": "Scan to view the branch:",
+    "addressTitle": "Address:",
+    "goBack": "Go back"
+  },
+  "promotionDetail": {
     "description": "Description",
     "validity": "Validity",
     "from": "From",
@@ -413,20 +427,26 @@
     "loading": "Loading...",
     "address": "Address"
   },
-  "ErrorModal":{
+  "ErrorModal": {
     "errorTitle": "Error",
     "closeButton": "Close"
   },
-  "ExitoModal":{
+  "ExitoModal": {
     "successTitle": "Success",
     "closeButton": "Close"
   },
-  "AlertModal":{
+  "AlertModal": {
     "title": "Alert",
     "cancel": "Cancel",
     "confirm": "Confirm"
   },
   "callout": {
-      "howToGetThere": "How to get there?"
-    }
+    "howToGetThere": "How to get there?"
+  },
+  "resetPassword": {
+    "noMatch": "Passwords do not match.",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "reset": "Reset"
+  }
 }

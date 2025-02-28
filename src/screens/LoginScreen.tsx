@@ -4,11 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useDispatch } from 'react-redux';
-import Icon from '@expo/vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 import { userLogIn } from '../redux/actions/userActions';
 import Loader from '../components/Loader';
 import { LinearGradient } from 'expo-linear-gradient';
-import Constants from 'expo-constants'; 
+import Constants from 'expo-constants';
 import ErrorModal from '../components/ErrorModal';
 import ExitoModal from '../components/ExitoModal';
 import AppVersionChecker from '../components/checkAppVersion';
@@ -46,20 +46,14 @@ const LoginScreen: React.FC = () => {
   const handleLogin = async () => {
     const lowerCaseEmail = email.trim().toLowerCase();
 
-    
+
     if (!isEmailValid(lowerCaseEmail)) {
-      setError('Por favor ingresa un correo válido.');
-      setModalMessage('El correo ingresado no es válido.');
+      setError(t('login.errorAlert.invalidEmailError'));
+      setModalMessage(t('login.errorAlert.invalidEmailMessage'));
       setErrorModalVisible(true);
       return;
     }
 
-    // if (password.length < 8) {
-    //   setError('La contraseña debe tener al menos 8 caracteres.');
-    //   setModalMessage('Tu contraseña debe contener al menos 8 caracteres.');
-    //   setErrorModalVisible(true);
-    //   return;
-    // }
     try {
       setLoading(true);
       const response = await dispatch<any>(userLogIn(lowerCaseEmail, password));
@@ -67,7 +61,7 @@ const LoginScreen: React.FC = () => {
 
       // Validación del estado del usuario
       if (response.user.status.name !== 'active') {
-        setModalMessage('Tu cuenta está inactiva. Contacta al soporte para más información.');
+        setModalMessage(t('login.errorAlert.inactiveAcconut'));
         setErrorModalVisible(true);
         return;
       }
@@ -77,7 +71,7 @@ const LoginScreen: React.FC = () => {
         (role: { role_name: string }) => role.role_name === 'associated'
       );
       if (!hasAssociatedRole) {
-        setModalMessage('Solo se permite el ingreso a los asociados.');
+        setModalMessage(t('login.errorAlert.invalidRol'));
         setErrorModalVisible(true);
         return;
       }
@@ -90,16 +84,28 @@ const LoginScreen: React.FC = () => {
       setPassword('');
       setTimeout(() => {
         setModalVisible(false);
-        navigation.navigate('MainAppScreen' );
+        navigation.navigate('MainAppScreen');
       }, 1500);
     } catch (err: any) {
+      if (err.message == "No existe el usuario") {
+        // "errorUserNotFound": "Användaren finns inte",
+        // "errorInvalidPassword":
+        setError(t('login.errorUserNotFound'));
+        setModalMessage(t('login.errorUserNotFound'));
+        setErrorModalVisible(true);
+      }else if (err.message == "Contraseña inválida") {
+        setError(t('login.errorInvalidPassword'));
+        setModalMessage(t('login.errorInvalidPassword'));
+        setErrorModalVisible(true);
+      }else{
+        setError(err.message);
+        setModalMessage(err.message);
+        setErrorModalVisible(true);
+      }
       setEmail('');
       setPassword('');
-      setError(err.message == 'Password inválido'? 'Contraseña inválida': err.message);
-      setModalMessage(err.message == 'Password inválido'? 'Contraseña inválida': err.message);
-      setErrorModalVisible(true);
+      //ERR: modificar para que revise codigos devueltos por el backend, al asociar con texto depende de la traducción
     } finally {
-
       setLoading(false);
     }
   };
@@ -110,7 +116,7 @@ const LoginScreen: React.FC = () => {
       style={styles.container}
     >
       <View style={styles.card}>
-        <Image source={require('../../assets/images/logo.png')} style={styles.logoLog}  contentFit="contain" />
+        <Image source={require('../../assets/images/logo.png')} style={styles.logoLog} contentFit="contain" />
         <TextInput
           style={styles.input}
           placeholder={t('login.emailPlaceholder')}
@@ -118,6 +124,7 @@ const LoginScreen: React.FC = () => {
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
+          
         />
         <View style={styles.passwordContainer}>
           <TextInput
@@ -128,14 +135,14 @@ const LoginScreen: React.FC = () => {
             onChangeText={setPassword}
             secureTextEntry={!showPassword}
           />
-          <TouchableOpacity 
-          onPress={() => setShowPassword(!showPassword)}
-           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
-            <Icon name={showPassword ? 'eye-off' : 'eye'} size={20} color={colors.circles2} />
+          <TouchableOpacity
+            onPress={() => setShowPassword(!showPassword)}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+            <Ionicons name={showPassword ? 'eye-off' : 'eye'} size={20} color={colors.circles2} />
           </TouchableOpacity>
         </View>
         {error && <Text style={styles.error}>{error}</Text>}
-        <TouchableOpacity style={styles.forgotPasswordButton} 
+        <TouchableOpacity style={styles.forgotPasswordButton}
           onPress={() => navigation.navigate('ForgotPassword')}
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
           <Text style={styles.forgotPasswordText}>{t('login.forgotPassword')}</Text>
@@ -143,15 +150,15 @@ const LoginScreen: React.FC = () => {
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>{t('login.login')}</Text>
         </TouchableOpacity>
-        <View  style={styles.asociadosCont} >
-        {/* <Image source={require('../../assets/images/adaptive-icon.png')} style={styles.logoAsociados} contentFit="contain"  /> */}
-        <Text  style={styles.asociadostext} >{t('login.associates')}</Text>
-        
+        <View style={styles.asociadosCont} >
+          {/* <Image source={require('../../assets/images/adaptive-icon.png')} style={styles.logoAsociados} contentFit="contain"  /> */}
+          <Text style={styles.asociadostext} >{t('login.associates')}</Text>
+
         </View>
         {loading && <Loader />}
       </View>
       <AppVersionChecker />
-        {/* <Text  style={styles.versionText} >Version {appVersion}</Text> */}
+      {/* <Text  style={styles.versionText} >Version {appVersion}</Text> */}
       {/* <Modal isVisible={isModalVisible}>
         <View style={styles.modalContent}>
           <Text style={styles.modalMessage}>{modalMessage}</Text>
@@ -160,8 +167,8 @@ const LoginScreen: React.FC = () => {
           </TouchableOpacity>
         </View>
       </Modal> */}
-       {/* Modales */}
-       <ErrorModal
+      {/* Modales */}
+      <ErrorModal
         visible={errorModalVisible}
         message={modalMessage}
         onClose={() => setErrorModalVisible(false)}
@@ -196,33 +203,30 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   logoLog: {
-    height: screenWidth*0.45,
-    width: screenWidth*0.45,
+    height: screenWidth * 0.45,
+    width: screenWidth * 0.45,
     marginBottom: 5,
   },
-  asociadosCont:{
+  asociadosCont: {
     // position:'relative',
-    display:'flex',
-    flexDirection:'column',
-    height:50,
-    width:screenWidth*0.8,
-    alignItems:'center',
-    justifyContent:'center'
+    display: 'flex',
+    flexDirection: 'column',
+    height: 50,
+    width: screenWidth * 0.8,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  logoAsociados:{
-    height:120,
-    width:100,
+  logoAsociados: {
+    height: 120,
+    width: 100,
 
   },
-  asociadostext:{
-      position:'absolute',
-      height:50,
-      top:0,
-      left:120,
-      fontFamily: 'Ice-Cream-Man-DEMO',
-      color: colors.primary,
-      fontSize: 18,
-      // fontWeight:'700'
+  asociadostext: {
+    position: 'absolute',
+    height: 50,
+    fontFamily: 'Ice-Cream-Man-DEMO',
+    color: colors.primary,
+    fontSize: 18,
   },
   input: {
     minHeight: 48,
@@ -248,13 +252,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   inputPassword: {
-    minHeight:48,
+    minHeight: 48,
     flex: 1,
     fontSize: 14,
   },
   error: {
-    alignSelf:'flex-end',
-    marginRight:10,
+    alignSelf: 'flex-end',
+    marginRight: 10,
     color: '#e00d0d',
     marginTop: 5,
     fontSize: 12,
@@ -267,8 +271,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 30,
     width: '100%',
-    alignItems:'center',
-    justifyContent:'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     fontFamily: 'Inter-Regular-400',
     minHeight: 48,
     shadowColor: '#000',
@@ -279,7 +283,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontSize: screenWidth*0.045,
+    fontSize: screenWidth * 0.045,
     fontWeight: 'bold',
     fontFamily: 'Inter-Regular-400',
   },
@@ -308,28 +312,28 @@ const styles = StyleSheet.create({
   },
   forgotPasswordText: {
     color: colors.primary,
-    fontSize: screenWidth*0.035,
+    fontSize: screenWidth * 0.035,
     fontFamily: 'Inter-Regular-400',
   },
   modalContent: {
     backgroundColor: 'rgba(246, 246, 246, 0.9)',
     color: 'white',
-    display:'flex',
-    alignSelf:'center',
-    flexDirection:'column',
+    display: 'flex',
+    alignSelf: 'center',
+    flexDirection: 'column',
     padding: 20,
     borderRadius: 10,
     alignItems: 'center',
     width: '70%',
-    height:'30%',
-    justifyContent:'space-evenly'
+    height: '30%',
+    justifyContent: 'space-evenly'
   },
   modalMessage: {
-    width:'100%',
-    textAlign:'center',
+    width: '100%',
+    textAlign: 'center',
     fontSize: 16,
     marginBottom: 20,
-    fontWeight:'600',
+    fontWeight: '600',
     color: colors.primary,
   },
   modalButton: {
@@ -343,12 +347,12 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
   },
-  versionText:{
-    marginTop:20,
-    fontSize: screenWidth*0.035,
+  versionText: {
+    marginTop: 20,
+    fontSize: screenWidth * 0.035,
     fontFamily: 'Inter-Regular-400',
     color: colors.primary,
-    fontWeight:'400'
+    fontWeight: '400'
   }
 });
 

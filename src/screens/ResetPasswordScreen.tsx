@@ -4,17 +4,19 @@ import { useRoute, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import { resetPassword } from '../services/authService';
 import colors from '../config/colors';
+import { useTranslation } from 'react-i18next';
 
 type ResetPasswordScreenRouteProp = RouteProp<RootStackParamList, 'ResetPassword'>;
 
 const ResetPasswordScreen: React.FC = () => {
+  const { t } = useTranslation();
   const route = useRoute<ResetPasswordScreenRouteProp>();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleResetPassword = async () => {
     if (password !== confirmPassword) {
-      Alert.alert('Error', 'Las contraseñas no coinciden.');
+      Alert.alert(t('ErrorModal.errorTitle'), t('resetPassword.noMatch'));
       return;
     }
 
@@ -38,7 +40,7 @@ const ResetPasswordScreen: React.FC = () => {
       <Text style={styles.title}>Restablecer Contraseña</Text>
       <TextInput
         style={styles.input}
-        placeholder="Nueva Contraseña"
+        placeholder={t('ErrorModal.newPassword')}
         placeholderTextColor="#aaa"
         value={password}
         onChangeText={setPassword}
@@ -46,14 +48,14 @@ const ResetPasswordScreen: React.FC = () => {
       />
       <TextInput
         style={styles.input}
-        placeholder="Confirmar Contraseña"
+        placeholder={t('ErrorModal.confirmPassword')}
         placeholderTextColor="#aaa"
         value={confirmPassword}
         onChangeText={setConfirmPassword}
         secureTextEntry
       />
       <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
-        <Text style={styles.buttonText}>Restablecer</Text>
+        <Text style={styles.buttonText}>{t('ErrorModal.reset')}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -90,7 +92,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   button: {
-    backgroundColor:colors.primary,
+    backgroundColor: colors.primary,
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 8,

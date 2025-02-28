@@ -26,9 +26,10 @@ import ErrorModal from '../components/ErrorModal';
 import { ScrollView } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import Icon from '@expo/vector-icons/Feather';
-import { KeyboardAvoidingView, Platform, Keyboard,Touchable } from 'react-native';
+import { KeyboardAvoidingView, Platform, Keyboard, Touchable } from 'react-native';
 import colors from '../config/colors';
 import { useTranslation } from 'react-i18next';
+import { decryptIds } from '../utils/encrypt';
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 type homeScreenProp = StackNavigationProp<RootStackParamList>;
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
@@ -71,13 +72,19 @@ const QRScanButton = () => {
   const [modalErrorVisible, setModalErrorVisible] = useState(false);
   // console.log("access token",accessToken);
   // console.log("terminos actuales",currentTerms);
-  // console.log("promotions",promotions.length);
+  // console.log("promotions en scaner",promotions);
   // console.log("statuses",statuses);
   // console.log("promotions consumidas",promotionsConsumed);
   const filteredPromotions = promotions.filter(promotion => {
-    const startDate = new Date(promotion.start_date);
-    const expirationDate = new Date(promotion.expiration_date);
-    return promotion.status?.name === 'active' && currentDate >= startDate && currentDate <= expirationDate;
+    const startDate = new Date(promotion.start_date + "T00:00:00");
+    const expirationDate = new Date(promotion.expiration_date + "T00:00:00"); 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);    
+    return (
+      promotion.status?.name === 'active' &&
+      today >= startDate &&
+      today <= expirationDate //incluido el dia de vencimiento
+    );
   });
   // console.log("filteredPromotions",filteredPromotions);
   // console.log("promocion seleccionada",selectedPromotion);
@@ -100,7 +107,7 @@ const QRScanButton = () => {
         t('qrScanner.permissionAlert.message'),
         [
           {
-            text:  t('qrScanner.permissionAlert.requestPermission'),
+            text: t('qrScanner.permissionAlert.requestPermission'),
             onPress: requestPermission,
           },
           {
@@ -214,30 +221,70 @@ const QRScanButton = () => {
     }
   };
 
+  // escanear qr
   const handleBarCodeScanned = ({ type, data }: ScanData) => {
     console.log('Scanned QR Code:', data);
+  
+    // Detener la cámara
     setCameraVisible(false);
-    const [userId, email] = data.split('-');
+    const encryptedId = data.replace("https://www.kupzilla.com/PromotionDetail/", "");
+    console.log("codigo", encryptedId);
+    try {
+      
+      // Desencriptar los IDs
+      const { promotionId, userId, email } = decryptIds(encryptedId);
+      console.log('✅ Datos desencriptados:', { promotionId, userId, email });
+      
+      const noPromotion = promotions.find(promo => promo.promotion_id == promotionId);
+      console.log("noPromotion",noPromotion);
+      
+      if(!noPromotion){
+        showErrorModal(t('qrScanner.noPromotion'));
+        return;
+      }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if(noPromotion?.status?.name !== "active"){
+        showErrorModal(t('qrScanner.noActivePromotion'));
+        return;
+      }
+      
+      console.log("promocion leida______________", promotionId);
+      
+      if (promotionId) {
+        handlePromotionSelect(promotionId)
+        // setScannedEmail()
+      } else {
+        showErrorModal(t('qrScanner.invalidPromotion')); // Si no se encuentra la promoción
+        return;
+      }
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (!userId || !email || !emailRegex.test(email)) {
-    showErrorModal(t('qrScanner.invalidUser'));
-    return;
-  }
-    setScannedUser(userId);
-    setScannedEmail(email)
-    setModalVisible(true);
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
+      if (!userId || !email || !emailRegex.test(email)) {
+        showErrorModal(t('qrScanner.invalidUser'));
+        return;
+      }
+      // Guardamos el userId desencriptado
+      setScannedUser(userId.toString());
+      setScannedEmail(email);
+      setModalVisible(true);
+  
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    } catch (error) {
+      showErrorModal(t('qrScanner.errorAlert.invalidQR'));
+      console.error('Error al procesar el código QR:', error);
     }
   };
+
   const handlePromotionSelect = (promotionId: number) => {
-    const selectedPromotion = filteredPromotions.find(promo => promo.promotion_id == promotionId);
+    const selectedPromotion = promotions.find(promo => promo.promotion_id == promotionId);
+    // console.log("promocion elegida-----------",selectedPromotion);
+    
     if (selectedPromotion) {
       setSelectedPromotion(selectedPromotion);
     } else {
-      setSelectedPromotion(null); 
+      setSelectedPromotion(null);
     }
   };
 
@@ -247,7 +294,7 @@ const QRScanButton = () => {
       showErrorModal(t('qrScanner.errorAlert.field'));
       return;
     }
-    
+
     const status = statuses.find(status => status.name === 'active');
 
     if (!selectedPromotion || !quantityConsumed || !amountSpent) {
@@ -374,21 +421,23 @@ const QRScanButton = () => {
       </View>
     );
   }
-  const promotionsActiv = filteredPromotions.map((promotion: any) => ({
+  const promotionsActiv = filteredPromotions?.map((promotion: any) => ({
     label: promotion.title,
     value: promotion.promotion_id.toString(),
   }));
+  // console.log("promotions filteredPromotions en scaner",filteredPromotions);
+  // console.log("promotions promotionsActiv en scaner",promotionsActiv);
   return (
     <View style={styles.container}>
       {isloading && <Loader />}
       <ExitoModal
-      visible={modalSuccessVisible}
-      message={modalSuccessMessage}
-      onClose={() => {
-        setModalSuccessVisible(false);
-      }}
-    />
-    <ErrorModal
+        visible={modalSuccessVisible}
+        message={modalSuccessMessage}
+        onClose={() => {
+          setModalSuccessVisible(false);
+        }}
+      />
+      <ErrorModal
         visible={modalErrorVisible}
         message={modalMessage}
         onClose={() => setModalErrorVisible(false)}
@@ -440,15 +489,21 @@ const QRScanButton = () => {
                 <View style={styles.line} />
                 <Text style={styles.modalTitle}>{t('qrScanner.selectPromotion')}</Text>
                 <View style={styles.pickerContainer}>
-                  {filteredPromotions && filteredPromotions.length ? (
+                  {filteredPromotions && filteredPromotions.length  && selectedPromotion? (
                     <RNPickerSelect
                       onValueChange={(itemValue) => handlePromotionSelect(itemValue)}
                       value={selectedPromotion?.promotion_id}
                       items={promotionsActiv}
-                      placeholder={{ label:t('qrScanner.selectPromotionPlaceholder'), value: '' }}
+                      placeholder={{ label: t('qrScanner.selectPromotionPlaceholder'), value: '' }}
                       style={{
-                        inputIOS: styles.picker,
-                        inputAndroid: styles.picker,
+                        inputIOS: {
+                          ...styles.picker,
+                          color: selectedPromotion ? colors.orange_color : '#333',
+                        },
+                        inputAndroid: {
+                          ...styles.picker,
+                          color: selectedPromotion ? colors.orange_color : '#333',
+                        },
                         iconContainer: {
                           position: 'absolute',
                           right: 15,
@@ -460,7 +515,7 @@ const QRScanButton = () => {
                       Icon={() => <Icon name="chevron-down" size={26} color={colors.primary} />}
                     />
                   ) : (
-                    <Text>No tienes promociones disponibles o en curso</Text>
+                    <Text></Text>
                   )}
                 </View>
                 {selectedPromotion && (
@@ -516,7 +571,7 @@ const QRScanButton = () => {
             </ScrollView>
           </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
-      </Modal>  
+      </Modal>
 
       {/* Modal para aceptar los términos y condiciones */}
       {currentTerms &&
@@ -540,18 +595,18 @@ const QRScanButton = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    height:screenHeight,
-    display:'flex',
-    flexDirection:'column',
+    height: screenHeight,
+    display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    alignContent:'center'
+    alignContent: 'center'
   },
-  containercircle:{
-    position:'absolute',
-    top:-20,
-    height:screenHeight *0.2,
-    width:screenWidth
+  containercircle: {
+    position: 'absolute',
+    top: -20,
+    height: screenHeight * 0.2,
+    width: screenWidth
   },
   iconContainer: {
     marginBottom: 20,
@@ -561,7 +616,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     width: 200,
-    height: 200, 
+    height: 200,
   },
   scanLine: {
     position: 'absolute',
@@ -578,32 +633,32 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor:colors.primary,
+    backgroundColor: colors.primary,
     elevation: 2,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 1
   },
-  buttonconsumidas:{
+  buttonconsumidas: {
     marginTop: 10,
     paddingVertical: 5,
     paddingHorizontal: 35,
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor:'#fff',
+    backgroundColor: '#fff',
     // borderWidth:1,
     // borderColor: '#acd1d6',
-    color:colors.primary,
+    color: colors.primary,
     minHeight: 48,
     elevation: 2,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.3,
     shadowRadius: 1
-    
+
   },
   buttonTextconsum: {
-    color:colors.primary,
+    color: colors.primary,
     fontSize: 14,
     fontWeight: '600',
     letterSpacing: 0.5,
@@ -615,7 +670,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   buttonPressed: {
-    backgroundColor: '#275d8e', 
+    backgroundColor: '#275d8e',
     transform: [{ scale: 0.98 }],
   },
   frameContainer: {
@@ -679,10 +734,10 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     minHeight: 48,
-    minWidth:48,
+    minWidth: 48,
     position: 'absolute',
     bottom: 50,
-    left: screenWidth*0.45,
+    left: screenWidth * 0.45,
     padding: 10,
     backgroundColor: 'rgb(246, 246, 246)',
     borderRadius: 25,
@@ -709,8 +764,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   modalTitle: {
-    width:screenWidth *0.8,
-    textAlign:'center',
+    width: screenWidth * 0.8,
+    textAlign: 'center',
     fontSize: screenWidth * 0.04,
     fontWeight: 'bold',
     color: colors.primary,
@@ -726,68 +781,50 @@ const styles = StyleSheet.create({
   },
   promotionText: {
     color: '#fff',
-    marginTop:screenWidth *0.01,
+    marginTop: screenWidth * 0.01,
     fontWeight: 'bold',
   },
   input: {
     minHeight: 48,
-    width:screenWidth *0.8,
+    width: screenWidth * 0.8,
     backgroundColor: '#fff',
     borderRadius: 5,
     paddingVertical: 5,
     paddingHorizontal: 15,
     fontSize: screenWidth * 0.04,
     marginVertical: 8,
-    borderColor: '#acd1d6',
+    borderColor: colors.inputBorder03,
     borderWidth: 1,
     marginBottom: 10,
     padding: 10,
   },
-  descriptioninput:{
-    height: screenHeight*0.25,
-    width:screenWidth *0.8,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    fontSize: screenWidth * 0.04,
-    borderColor: '#acd1d6',
-    borderWidth: 1,
-    marginBottom: 10,
-    padding: 10,
-    marginVertical: 8,
-    justifyContent:'flex-start',
-    alignContent:'flex-start',
-    alignItems:'flex-start',
-    textAlignVertical:'top'
-  },
-  btnsFormcons:{
-    width:'100%',
-    display:'flex',
-    flexDirection:'row',
-    justifyContent:'center'
+  btnsFormcons: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   confirmButton: {
-    backgroundColor:colors.primary,
+    backgroundColor: colors.primary,
     padding: 10,
     marginHorizontal: 5,
-    width:screenWidth *0.35,
-    marginTop:screenWidth *0.04,
+    width: screenWidth * 0.35,
+    marginTop: screenWidth * 0.04,
     minHeight: 48,
     borderRadius: 25,
-    display:'flex',
-    flexDirection:'row',
-    justifyContent:'center',
-    alignItems:'center',
-    alignContent:'center',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
   },
   disabledButton: {
-    opacity: 0.5, 
+    opacity: 0.5,
   },
   confirmButtonText: {
-    textAlign:'center',
+    textAlign: 'center',
     color: '#fff',
-    fontSize: screenWidth *0.04,
+    fontSize: screenWidth * 0.04,
     fontWeight: 'bold',
   },
   cancelButton: {
@@ -795,29 +832,29 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 25,
     marginHorizontal: 5,
-    width:screenWidth *0.35,
-    marginTop:screenWidth *0.04,
+    width: screenWidth * 0.35,
+    marginTop: screenWidth * 0.04,
     minHeight: 48,
-    display:'flex',
-    flexDirection:'row',
-    justifyContent:'center',
-    alignItems:'center',
-    alignContent:'center',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
   },
   cancelButtonText: {
-    
-    textAlign:'center',
+
+    textAlign: 'center',
     color: '#fff',
-    fontSize: screenWidth *0.04,
+    fontSize: screenWidth * 0.04,
     fontWeight: 'bold',
   },
   pickerContainer: {
-    width:screenWidth *0.8,
+    width: screenWidth * 0.8,
     fontSize: screenWidth * 0.02,
-    backgroundColor:'#fff',
-    alignContent:'center',
-    alignItems:'center',
-    justifyContent:'center',
+    backgroundColor: '#fff',
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 1,
     borderColor: colors.inputBorder03,
     borderRadius: 5,
@@ -827,77 +864,86 @@ const styles = StyleSheet.create({
   picker: {
     fontSize: screenWidth * 0.04,
     height: 45,
-    width:screenWidth *0.7,
-    alignItems:'center',
-    justifyContent:'center',
+    width: screenWidth * 0.7,
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingVertical: 12,
-    paddingHorizontal:10
+    paddingHorizontal: 10
   },
-  pickerItem:{
+  pickerItem: {
     fontSize: screenWidth * 0.04,
-    color:'#336749',
+    color: '#336749',
   },
-  quantity:{
-    display:'flex',
-    flexDirection:'row',
-    alignContent:'center',
-    width:screenWidth * 0.78,
+  quantity: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignContent: 'center',
+    width: screenWidth * 0.78,
   },
-  quantityText:{
+  quantityText: {
     fontSize: screenWidth * 0.04,
-    width:screenWidth*0.24,
-    color:'#336749',
+    width: screenWidth * 0.24,
+    color: '#336749',
   },
-  quantityText2:{
-    fontWeight:'600',
+  quantityText2: {
+    fontWeight: '600',
     fontSize: screenWidth * 0.04,
-    color:colors.primary,
-    width:screenWidth*0.6,
+    color: colors.primary,
+    width: screenWidth * 0.6,
   },
-  quantityTextError:{
-    fontWeight:'600',
+  quantityTextError: {
+    fontWeight: '600',
     fontSize: screenWidth * 0.04,
-    color:'rgb(193, 34, 34)',
-    width:screenWidth*0.6,
+    color: 'rgb(193, 34, 34)',
+    width: screenWidth * 0.6,
   },
-  userName:{
-    display:'flex',
-    flexDirection:'row',
-    alignContent:'center',
-    justifyContent:'center',
-    width:screenWidth * 0.78,
-    marginVertical:screenWidth * 0.03,
+  userName: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignContent: 'center',
+    justifyContent: 'center',
+    width: screenWidth * 0.78,
+    marginVertical: screenWidth * 0.03,
   },
-  userText:{
+  userText: {
     fontSize: screenWidth * 0.04,
-    width:screenWidth*0.18,
-    color:'#336749',
+    width: screenWidth * 0.18,
+    color: '#336749',
   },
-  userText2:{
-    fontWeight:'600',
+  userText2: {
+    fontWeight: '600',
     fontSize: screenWidth * 0.04,
-    color:colors.primary,
-    width:screenWidth*0.6,
+    color: colors.primary,
+    width: screenWidth * 0.6,
   },
   line: {
-    height: 1, 
-    backgroundColor: '#acd0d5', 
-    marginVertical: 10, 
-    width:screenWidth * 0.78,
+    height: 1,
+    backgroundColor: colors.circles3,
+    marginVertical: 10,
+    width: screenWidth * 0.78,
   },
-  Terms:{
-    borderRadius:10,
+  Terms: {
+    borderRadius: 10,
     // flex:1,
     // height:screenHeight,
   },
   descriptionInput: {
-    height: 100, 
-    borderColor: '#acd1d6',
-    borderWidth: 1,
+    height: screenHeight * 0.20,
+    width: screenWidth * 0.8,
+    backgroundColor: '#fff',
     borderRadius: 5,
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    fontSize: screenWidth * 0.04,
+    borderColor: colors.inputBorder03,
+    borderWidth: 1,
     marginBottom: 10,
-    textAlignVertical: 'top', 
+    padding: 10,
+    marginVertical: 8,
+    justifyContent: 'flex-start',
+    alignContent: 'flex-start',
+    alignItems: 'flex-start',
+    textAlignVertical: 'top'
   },
 });
 

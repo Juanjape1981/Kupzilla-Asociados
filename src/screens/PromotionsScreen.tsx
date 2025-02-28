@@ -25,7 +25,7 @@ import { loadData } from '../redux/actions/dataLoader';
 import colors from '../config/colors';
 import { useTranslation } from 'react-i18next';
 
-const { width: screenWidth, height:screenHeigth } = Dimensions.get('window');
+const { width: screenWidth, height: screenHeigth } = Dimensions.get('window');
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
 const PromotionsScreen: React.FC = () => {
@@ -84,7 +84,7 @@ const PromotionsScreen: React.FC = () => {
       const status_id = deletedState.id;
       // Despacha la acción para actualizar la promoción con el estado "deleted"
       await dispatch(deletePromotion(promotionId, status_id));
-      if(user && user.user_id){
+      if (user && user.user_id) {
         await dispatch(fetchPromotions(user.user_id))
       }
     } else {
@@ -111,12 +111,12 @@ const PromotionsScreen: React.FC = () => {
   return (
     <View style={styles.gradient}
     >
-     <View style={styles.btns}>
+      <View style={styles.btns}>
         <TouchableOpacity style={styles.createButton} onPress={handleCreatePress}>
           {/* <MaterialIcons name="assignment-add" size={24} color="#fff" /> */}
           <View style={styles.createButtonmas}>
             <Text style={styles.createButtonText}>+</Text>
-          <MaterialCommunityIcons name="ticket-percent-outline" size={24} color="#fff" />
+            <MaterialCommunityIcons name="ticket-percent-outline" size={24} color="#fff" />
           </View>
           <Text style={styles.createButtonText}>{t('promotions.create')}</Text>
         </TouchableOpacity>
@@ -164,8 +164,8 @@ const PromotionsScreen: React.FC = () => {
       <ExitoModal
         visible={modalSuccessVisible}
         message={modalSuccessMessage}
-        onClose={() => {setModalSuccessVisible(false)}}
-        />
+        onClose={() => { setModalSuccessVisible(false) }}
+      />
     </View>
   );
 };
@@ -239,13 +239,13 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 3,
   },
-  createButtonmas:{
-    display:'flex',
-    flexDirection:'row',
-    justifyContent:'center',
-    alignContent:'center',
-    alignItems:'center',
-    
+  createButtonmas: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+
   },
   createButtonText: {
     color: '#fff',
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
   promotionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color:colors.primary,
+    color: colors.primary,
   },
   promotionDates: {
     marginTop: 10,

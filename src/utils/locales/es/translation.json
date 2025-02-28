@@ -1,10 +1,10 @@
 {
-    "navBar":{
-      "greeting": "Hola",
-      "profile": "Perfil",
-      "logout": "Salir",
-      "language": "Idioma"
-    },
+  "navBar": {
+    "greeting": "Hola",
+    "profile": "Perfil",
+    "logout": "Salir",
+    "language": "Idioma"
+  },
   "languageSelector": {
     "chooseLanguage": "Elige un idioma"
   },
@@ -24,22 +24,37 @@
     "register": "Regístrate",
     "close": "Cerrar",
     "associates": "ASOCIADOS",
-    "version": "Versión"
-    
+    "version": "Versión",
+    "errorInactiveAssociate":"Asociado inactivo o eliminado",
+    "errorUnauthorizedRole": "Rol no autorizado",
+    "errorGeneral": "Se produjo un error. Intente nuevamente más tarde.",
+    "errorUserNotFound":"No existe el usuario",
+    "errorInvalidPassword": "Contraseña inválida",
+    "errorAlert": {
+      "title": "Error",
+      "invalidEmailError": "Por favor, ingresa un correo válido.",
+      "invalidEmailMessage": "¡Ups! Revisa tu correo e inténtalo nuevamente.",
+      "inactiveAcconut": "Tu cuenta está inactiva. Comunícate con soporte para más información.",
+      "invalidRol": "¡Ups! Parece que no cuentas con el rol necesario para ingresar a esta sección.",
+      "invalidPassword": "Tu cuenta o contraseña es incorrecta. Si olvidaste tu contraseña, puedes restablecerla ahora."
+    }
   },
   "qrScanner": {
     "invalidUser": "Solo se pueden escanear credenciales de usuarios activos.",
     "scanQRButton": "Escanear QR",
     "consumptionsButton": "Consumos",
-    "invalidCode":"Código QR inválido",
+    "invalidCode": "Código QR inválido",
     "scanQRCode": "Debes escanear el QR de la credencial que realiza el consumo.",
+    "noPromotions": "You have no promotions available or in progress.",
+    "noPromotion":"La promoción escaneada no pertenece a tu sucursal",
+    "noActivePromotion":"La promoción no está activa en este momento",
     "permissionAlert": {
-      "title": "Permiso de cámara necesario",
-      "message": "Se requiere acceso a la cámara para escanear el código QR.",
-      "requestPermission": "Solicitar permiso",
-      "cancel": "Cancelar",
-      "permissionDenied": "Permiso denegado",
-      "goToSettings": "Por favor, habilita el permiso de la cámara en la configuración."
+    "title": "Permiso de cámara necesario",
+    "message": "Se requiere acceso a la cámara para escanear el código QR.",
+    "requestPermission": "Solicitar permiso",
+    "cancel": "Cancelar",
+    "permissionDenied": "Permiso denegado",
+    "goToSettings": "Por favor, habilita el permiso de la cámara en la configuración."
     },
     "clientLabel": "Cliente:",
     "noUserDetected": "Usuario no detectado",
@@ -59,7 +74,7 @@
     "errorAlert": {
       "title": "Error",
       "message": "No se pudo registrar el consumo de la promoción. Intenta de nuevo.",
-      "field":"Debes completar todos los campos.",
+      "field": "Debes completar todos los campos.",
       "dig": "La cantidad no puede tener más de 8 dígitos.",
       "nomore1": "No puedes consumir más de",
       "nomore2": "promociones.",
@@ -85,12 +100,12 @@
     "errorMessage": "Error al enviar el correo de recuperación."
   },
   "update": {
-  "available": "Actualización disponible",
-  "message_required": "Es obligatorio actualizar la aplicación para continuar.",
-  "message_optional": "Hay una nueva versión disponible. ¿Quieres actualizar ahora?",
-  "update_button": "Actualizar",
-  "later_button": "Más tarde"
-},
+    "available": "Actualización disponible",
+    "message_required": "Es obligatorio actualizar la aplicación para continuar.",
+    "message_optional": "Hay una nueva versión disponible. ¿Quieres actualizar ahora?",
+    "update_button": "Actualizar",
+    "later_button": "Más tarde"
+  },
   "register": {
     "firstNamePlaceholder": "* Nombre",
     "lastNamePlaceholder": "* Apellido",
@@ -123,38 +138,38 @@
     "error_message": "Hubo un error al inactivar la sucursal"
   },
   "branchForm": {
-  "name": "Nombre de la sucursal",
-  "placeholdername": "* Nombre de la sucursal",
-  "address": "Dirección",
-  "description": "Descripción",
-  "placeholderDescription": "Descripción de la sucursal",
-  "latitude": "Latitud",
-  "longitude": "Longitud",
-  "useCurrentLocation": "Usar mi ubicación actual",
-  "chooseLocation": "Elige la ubicación de la sucursal en el mapa",
-  "deleteBranch": "Eliminar Sucursal",
-  "deleteConfirm": "¿Estás seguro de que deseas eliminar esta sucursal?",
-  "success": "Sucursal actualizada con éxito",
-  "error": "Hubo un error al actualizar la sucursal",
-  "successDelete": "Sucursal eliminada con éxito",
-  "errorDelete": "Hubo un error al eliminar la sucursal",
-  "saveChanges": "Guardar Cambios",
-  "createBranch": "Crear Sucursal",
-  "cancel": "Cancelar",
-  "locationPermissionDenied": "Permiso para acceder a la ubicación denegado",
-  "branchCreationSuccess": "La sucursal se ha creado correctamente.",
-  "branchUpdateSuccess": "Sucursal actualizada con éxito",
-  "branchUpdateError": "Hubo un problema al guardar o actualizar la sucursal. Por favor, inténtalo de nuevo.",
-  "branchDeleteSuccess": "La sucursal y sus promociones se eliminaron correctamente.",
-  "branchDeleteError": "Hubo un problema al eliminar la sucursal.",
-  "branchNameMismatch": "El nombre de la sucursal no coincide.",
-  "locationFetchError": "Error al obtener la ubicación.",
-  "maxNameLength": "El nombre no puede superar los 30 caracteres.",
-  "maxAddressLength": "La dirección no puede superar los 50 caracteres.",
-  "maxDescriptionLength": "La descripción no puede superar los 250 caracteres.",
-  "missingFieldsError": "Los siguientes campos son obligatorios: ",
-  "missingName": "Nombre",
-  "missingLocation": "Latitud y Longitud"
+    "name": "Nombre de la sucursal",
+    "placeholdername": "* Nombre de la sucursal",
+    "address": "Dirección",
+    "description": "Descripción",
+    "placeholderDescription": "Descripción de la sucursal",
+    "latitude": "Latitud",
+    "longitude": "Longitud",
+    "useCurrentLocation": "Usar mi ubicación actual",
+    "chooseLocation": "Elige la ubicación de la sucursal en el mapa",
+    "deleteBranch": "Eliminar Sucursal",
+    "deleteConfirm": "¿Estás seguro de que deseas eliminar esta sucursal?",
+    "success": "Sucursal actualizada con éxito",
+    "error": "Hubo un error al actualizar la sucursal",
+    "successDelete": "Sucursal eliminada con éxito",
+    "errorDelete": "Hubo un error al eliminar la sucursal",
+    "saveChanges": "Guardar Cambios",
+    "createBranch": "Crear Sucursal",
+    "cancel": "Cancelar",
+    "locationPermissionDenied": "Permiso para acceder a la ubicación denegado",
+    "branchCreationSuccess": "La sucursal se ha creado correctamente.",
+    "branchUpdateSuccess": "Sucursal actualizada con éxito",
+    "branchUpdateError": "Hubo un problema al guardar o actualizar la sucursal. Por favor, inténtalo de nuevo.",
+    "branchDeleteSuccess": "La sucursal y sus promociones se eliminaron correctamente.",
+    "branchDeleteError": "Hubo un problema al eliminar la sucursal.",
+    "branchNameMismatch": "El nombre de la sucursal no coincide.",
+    "locationFetchError": "Error al obtener la ubicación.",
+    "maxNameLength": "El nombre no puede superar los 30 caracteres.",
+    "maxAddressLength": "La dirección no puede superar los 50 caracteres.",
+    "maxDescriptionLength": "La descripción no puede superar los 250 caracteres.",
+    "missingFieldsError": "Los siguientes campos son obligatorios: ",
+    "missingName": "Nombre",
+    "missingLocation": "Latitud y Longitud"
   },
   "promotions": {
     "searchPromotions": "Buscar promociones",
@@ -192,20 +207,20 @@
     "endDate": "Fecha de Fin",
     "start": "Inicia",
     "end": "Finaliza",
-    "fail":"Error",
-    "succ":"Éxito",
+    "fail": "Error",
+    "succ": "Éxito",
     "error": "Por favor complete todos los campos",
     "success": "La promoción ha sido creada correctamente.",
     "partnerError": "No se pudo obtener el ID del socio o la sucursal. Intente de nuevo.",
-    "max_images":"No se pueden agregar más de 6 imágenes.",
-    "categories":"Categorías",
+    "max_images": "No se pueden agregar más de 6 imágenes.",
+    "categories": "Categorías",
     "createError": "Hubo un problema al actualizar la promoción. Intente de nuevo.",
-    "enddatepost":"La fecha de fin debe ser posterior a la fecha de inicio.",
-    "enddate":"La fecha de fin debe ser posterior a la fecha de inicio.",
-    "title_length":"El título no puede superar los 45 caracteres.",
-    "available_quantity_limit":"La cantidad disponible no puede superar los 8 caracteres.",
-    "quantity_greater_than_zero":"La cantidad debe ser mayor a 0."
-},
+    "enddatepost": "La fecha de fin debe ser posterior a la fecha de inicio.",
+    "enddate": "La fecha de fin debe ser posterior a la fecha de inicio.",
+    "title_length": "El título no puede superar los 45 caracteres.",
+    "available_quantity_limit": "La cantidad disponible no puede superar los 8 caracteres.",
+    "quantity_greater_than_zero": "La cantidad debe ser mayor a 0."
+  },
   "sidebar": {
     "profile": "Perfil",
     "favorites": "Favoritos",
@@ -226,23 +241,23 @@
     "from": "Desde",
     "to": "Hasta"
   },
-    "contactComponent": {
-      "description": "Somos la Cámara de Comercio, Turismo y Desarrollo de Cobquecura, dedicados a promover y fomentar un turismo familiar, seguro, sostenible y responsable en nuestra hermosa comuna. Nuestra misión es preservar y realzar el paisaje natural y cultural de la región, promoviendo la conservación del medio ambiente y respetando las tradiciones locales, sin perturbar el estilo de vida campesino que caracteriza Cobquecura.",
-      "boardTitle": "NUESTRA COMISIÓN DIRECTIVA",
-      "president": "Presidente: Francisco Maldonado Gaete",
-      "vicePresident": "Vice Presidente: Cristobal Bustos Torres",
-      "treasurer": "Tesorería: Julia Fernandez",
-      "secretary": "Secretaria: Melina Polo",
-      "director": "Director: Leonardo Blait",
-      "counselorDirector": "Dir. Consejero: Oscar Solar Arriagada",
-      "contactMethods": "MEDIOS DE CONTACTO",
-      "cesfam": "Cesfam: (+56 42) 2585412",
-      "emergency": "Emergencias: (+569) 447-7199, (+56 42) 234-7609",
-      "recycling": "Reciclaje: (+569) 737-85708",
-      "website": "Visítanos en nuestra página web",
-      "footer": "2024 - Todos los derechos reservados"
-    },
-    "formComponent": {
+  "contactComponent": {
+    "description": "Somos la Cámara de Comercio, Turismo y Desarrollo de Cobquecura, dedicados a promover y fomentar un turismo familiar, seguro, sostenible y responsable en nuestra hermosa comuna. Nuestra misión es preservar y realzar el paisaje natural y cultural de la región, promoviendo la conservación del medio ambiente y respetando las tradiciones locales, sin perturbar el estilo de vida campesino que caracteriza Cobquecura.",
+    "boardTitle": "NUESTRA COMISIÓN DIRECTIVA",
+    "president": "Presidente: Francisco Maldonado Gaete",
+    "vicePresident": "Vice Presidente: Cristobal Bustos Torres",
+    "treasurer": "Tesorería: Julia Fernandez",
+    "secretary": "Secretaria: Melina Polo",
+    "director": "Director: Leonardo Blait",
+    "counselorDirector": "Dir. Consejero: Oscar Solar Arriagada",
+    "contactMethods": "MEDIOS DE CONTACTO",
+    "cesfam": "Cesfam: (+56 42) 2585412",
+    "emergency": "Emergencias: (+569) 447-7199, (+56 42) 234-7609",
+    "recycling": "Reciclaje: (+569) 737-85708",
+    "website": "Visítanos en nuestra página web",
+    "footer": "2024 - Todos los derechos reservados"
+  },
+  "formComponent": {
     "namePlaceholder": "Nombre",
     "surnamePlaceholder": "Apellido",
     "emailPlaceholder": "Correo Electrónico",
@@ -258,7 +273,8 @@
     "close": "Cerrar",
     "editCategories": "Editar Categorías",
     "saveCategories": "Guardar Categorías",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "notSpecified":"No especificado"
   },
   "promotionCard": {
     "preview": "Vista previa",
@@ -306,8 +322,8 @@
     "errorEndDateBeforeStartDate": "La fecha de finalización no puede ser menor a la fecha de inicio.",
     "errorEndDateBeforeToday": "La fecha de fin no puede ser menor a la fecha actual.",
     "updateError": "Hubo un problema al actualizar la promoción. Intente de nuevo.",
-    "max_images":"No se pueden agregar más de 6 imágenes.",
-    "requiered":"Los siguientes campos son obligatorios:",
+    "max_images": "No se pueden agregar más de 6 imágenes.",
+    "requiered": "Los siguientes campos son obligatorios:",
     "errorTitleLength": "El título no puede superar los 45 caracteres."
   },
   "allBranches": {
@@ -328,7 +344,7 @@
     "yes": "Sí",
     "no": "No"
   },
-  "profile":{
+  "profile": {
     "change_password": "Cambia tu contraseña",
     "current_password": "Contraseña actual",
     "new_password": "Nueva contraseña",
@@ -372,10 +388,10 @@
     "password_change_success": "Contraseña cambiada con éxito",
     "password_change_error": "Error al cambiar la contraseña",
     "input_error_30": "No debe exceder los 30 caracteres.",
-  "input_error_50": "No debe exceder los 50 caracteres.",
-  "input_error_25": "No debe exceder los 25 caracteres.",
-   "confirm_password_required": "Por favor, confirma tu nueva contraseña.",
-  "passwords_do_not_match": "La nueva contraseña y la confirmación no coinciden."
+    "input_error_50": "No debe exceder los 50 caracteres.",
+    "input_error_25": "No debe exceder los 25 caracteres.",
+    "confirm_password_required": "Por favor, confirma tu nueva contraseña.",
+    "passwords_do_not_match": "La nueva contraseña y la confirmación no coinciden."
   },
   "tabs": {
     "qrScanner": "Escáner-QR",
@@ -386,13 +402,13 @@
     "profile": "Perfil"
   },
   "branchDetails": {
-  "permissionDenied": "Permiso denegado",
-  "permissionMessage": "Se requiere permiso de ubicación para mostrar tu ubicación actual.",
-  "scanToView": "Escanea para ver la sucursal:",
-  "addressTitle": "Dirección:",
-  "goBack": "Volver"
-},
-"promotionDetail": {
+    "permissionDenied": "Permiso denegado",
+    "permissionMessage": "Se requiere permiso de ubicación para mostrar tu ubicación actual.",
+    "scanToView": "Escanea para ver la sucursal:",
+    "addressTitle": "Dirección:",
+    "goBack": "Volver"
+  },
+  "promotionDetail": {
     "description": "Descripción",
     "validity": "Validez",
     "from": "Desde",
@@ -413,20 +429,26 @@
     "address": "Dirección",
     "ratings": "Valoraciones"
   },
-  "ErrorModal":{
+  "ErrorModal": {
     "errorTitle": "Error",
     "closeButton": "Cerrar"
   },
-  "ExitoModal":{
+  "ExitoModal": {
     "successTitle": "Éxito",
     "closeButton": "Cerrar"
   },
-  "AlertModal":{
+  "AlertModal": {
     "title": "Alerta",
     "cancel": "Cancelar",
     "confirm": "Confirmar"
   },
-  "callout":{
+  "callout": {
     "howToGetThere": "¿Cómo llegar?"
+  },
+  "resetPassword": {
+    "noMatch": "Las contraseñas no coinciden.",
+    "newPassword": "Nueva Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "reset": "Restablecer"
   }
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, Platform, StatusBar, TouchableOpacity, Dimensions, Modal } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, Modal } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../services/authService';
 import { getMemoizedUserData } from '../redux/selectors/userSelectors';
@@ -137,8 +137,8 @@ const styles = StyleSheet.create({
   },
   popupContainer: {
     position: 'absolute',
-    width:screenWidth*0.35,
-    top: 60, 
+    width:screenWidth*0.36,
+    top: screenHeight*0.1,
     right: 20,
     backgroundColor: '#fff',
     padding: 5,
@@ -152,12 +152,15 @@ const styles = StyleSheet.create({
   popupOption: {
     width:'100%',
     display:'flex',
+    justifyContent:'flex-start',
+    alignContent:'flex-start',
+    alignItems:'flex-start',
     flexDirection:'row',
-    justifyContent:'space-evenly',
     paddingVertical: 5,
     paddingHorizontal: 10,
   },
   popupText: {
+    marginLeft:screenWidth*0.03,
     fontSize: screenWidth*0.045,
     color: colors.primary,
   },

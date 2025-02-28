@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions, Alert, TouchableOpacity } from 'react-native';
-import {  useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getMemoizedPromotions } from '../redux/selectors/promotionSelectors';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/AppNavigator';
@@ -11,7 +11,7 @@ import MapSingle from '../components/MapSingle';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Image } from 'expo-image';
 import QRCode from 'react-native-qrcode-svg';
-import { encryptId } from '../utils/encrypt';
+import { encryptIdBranch } from '../utils/encrypt';
 import colors from '../config/colors';
 import { useTranslation } from 'react-i18next';
 
@@ -27,7 +27,7 @@ type RouteParams = {
     image_url?: string;
     latitude: number;
     longitude: number;
-    average_rating:number;
+    average_rating: number;
   };
 };
 
@@ -45,25 +45,27 @@ const BranchDetails = () => {
   const [hashedId, setHashedId] = useState<string>('');
   const [QRBranch, setQRBranch] = useState<string | null>(null);
   const { t } = useTranslation();
-// console.log(branch);
+  // console.log(branch);
 
   useEffect(() => {
-   if(!currentPosition){ const requestLocationPermission = async () => {
-    setRouteLoading(true)
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert(t('branchDetails.permissionDenied'), t('branchDetails.permissionMessage'));
-        return;
-      }
-      const location = await Location.getCurrentPositionAsync({});
-      setCurrentPosition({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      });
-      setRouteLoading(false)
+    if (!currentPosition) {
+      const requestLocationPermission = async () => {
+        setRouteLoading(true)
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          Alert.alert(t('branchDetails.permissionDenied'), t('branchDetails.permissionMessage'));
+          return;
+        }
+        const location = await Location.getCurrentPositionAsync({});
+        setCurrentPosition({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        });
+        setRouteLoading(false)
 
-    };
-    requestLocationPermission();}
+      };
+      requestLocationPermission();
+    }
   }, [currentPosition]);
 
   const renderStars = (rating: number) => {
@@ -94,23 +96,24 @@ const BranchDetails = () => {
   };
 
 
-useEffect(() => {
-    if(!QRBranch && branch){
+  useEffect(() => {
+    if (!QRBranch && branch) {
       const QRencrypt = generateQRCodeValue(branch.branch_id)
       setQRBranch(QRencrypt)
     }
   }, [branch]);
   const generateQRCodeValue = (id: number) => {
-    const hashedId = encryptId(id);
+    const hashedId = encryptIdBranch(id);
+    //ERR: esto de debe cambiar para usar archivo de configuración - este error lo marcha Google como error de deeplink
     const appLink = `https://www.kupzilla.com/BranchDetails/${hashedId}`;
-    console.log(appLink);
-    
+    //console.log(appLink);
+
     return appLink;
   };
 
   const handleGetDirections = () => {
     // console.log("presiono boton", currentPosition);
-    
+
     if (branch && currentPosition) {
       setRouteLoading(true)
       setRouteSelected(true)
@@ -131,41 +134,41 @@ useEffect(() => {
   };
 
   const imageUrl = branch.image_url
-  ? `${API_URL}${branch.image_url}`
-  : null;
+    ? `${API_URL}${branch.image_url}`
+    : null;
   // console.log("id hasheado",hashedId);
   return (
     <ScrollView style={styles.container}>
-      {imageUrl ? 
+      {imageUrl ?
         <Image source={{ uri: imageUrl }} style={styles.image} /> :
         <View style={styles.noimageView}>
-          <Image source={require('../../assets/noimage.png')} style={styles.noimage} alt={branch.name}/>
+          <Image source={require('../../assets/noimage.png')} style={styles.noimage} alt={branch.name} />
         </View>
       }
       <TouchableOpacity onPress={handleGoBack} style={styles.backButton}>
-            <MaterialIcons name="arrow-back-ios-new" size={24} color={colors.primary} />
-          </TouchableOpacity>
+        <MaterialIcons name="arrow-back-ios-new" size={24} color={colors.primary} />
+      </TouchableOpacity>
       <View style={styles.container2}>
         <View style={styles.header}>
           <View style={styles.ratingContainerTitle}>
             <Text style={styles.title}>{branch.name}</Text>
             <View style={styles.stars}>{renderStars(branch.average_rating)}</View>
           </View>
-          
+
         </View>
         <Text style={styles.description}>{branch.description}</Text>
 
-      {/* QR Code */}
-      <View style={styles.qrContainer}>
-        <Text style={styles.qrTitle}>{t('branchDetails.scanToView')}</Text>
-        {QRBranch &&
-        <QRCode
-        value={QRBranch}
-        size={200}
-        color={colors.primary}
-        backgroundColor="#ffffff"
-        />}
-      </View>
+        {/* QR Code */}
+        <View style={styles.qrContainer}>
+          <Text style={styles.qrTitle}>{t('branchDetails.scanToView')}</Text>
+          {QRBranch &&
+            <QRCode
+              value={QRBranch}
+              size={200}
+              color={colors.primary}
+              backgroundColor="#ffffff"
+            />}
+        </View>
         <Text style={styles.addressTitle}>{t('branchDetails.addressTitle')}</Text>
         <Text style={styles.address}>{branch.address}</Text>
 
@@ -182,7 +185,7 @@ useEffect(() => {
           routeLoading={routeLoading}
           setRouteLoading={setRouteLoading}
           justSee={true}
-          onMapPress= {()=>setSelectedBranch(null)}
+          onMapPress={() => setSelectedBranch(null)}
         />
       </View>
     </ScrollView>
@@ -191,58 +194,58 @@ useEffect(() => {
 
 
 const styles = StyleSheet.create({
-    container: {
-        padding: 0,
-      },
-      container2: {
-        padding: 20,
-      },
+  container: {
+    padding: 0,
+  },
+  container2: {
+    padding: 20,
+  },
   header: {
     marginBottom: 10,
   },
-  iconSale:{
-    width:'85%',
-    alignSelf:'center',
-    textAlign:'center',
-    fontWeight:'700',
+  iconSale: {
+    width: '85%',
+    alignSelf: 'center',
+    textAlign: 'center',
+    fontWeight: '700',
   },
   title: {
-    fontSize: screenWidth*0.06,
-    width: screenWidth*0.7,
+    fontSize: screenWidth * 0.06,
+    width: screenWidth * 0.7,
     fontWeight: 'bold',
-    color:colors.primary
+    color: colors.primary
   },
-  stars:{
-    width: screenWidth*0.042,
+  stars: {
+    width: screenWidth * 0.042,
     display: 'flex',
     flexDirection: 'row',
-    alignItems:'center',
-    justifyContent:'flex-end',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
-  addressTitle:{
-    fontSize: screenWidth*0.035,
+  addressTitle: {
+    fontSize: screenWidth * 0.035,
     color: '#333',
     paddingTop: 20,
   },
   address: {
-    fontSize: screenWidth*0.035,
+    fontSize: screenWidth * 0.035,
     color: '#336749',
     paddingTop: 3,
-    fontWeight:'600'
+    fontWeight: '600'
   },
   description: {
-    fontSize: screenWidth*0.040,
+    fontSize: screenWidth * 0.040,
     color: '#336749',
-    fontWeight: 'bold', 
-    textAlign:'center'
+    fontWeight: 'bold',
+    textAlign: 'center'
   },
   ratingContainerTitle: {
     marginVertical: 10,
     width: '100%',
     display: 'flex',
     flexDirection: 'row',
-    alignItems:'center',
-    marginBottom:20,
+    alignItems: 'center',
+    marginBottom: 20,
     justifyContent: 'space-between'
   },
   image: {
@@ -251,14 +254,14 @@ const styles = StyleSheet.create({
     borderRadius: 0,
     marginTop: 0
   },
-  noimageView:{
+  noimageView: {
     height: 180,
     width: '100%',
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center'
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  noimage:{
+  noimage: {
     width: '70%',
     height: '70%',
     borderRadius: 0,
@@ -290,20 +293,20 @@ const styles = StyleSheet.create({
   },
   promotionsContainer: {
     marginTop: 20,
-    marginBottom:50
+    marginBottom: 50
   },
   promotionsTitle: {
-    marginVertical:20,
+    marginVertical: 20,
     fontSize: 14,
-    color:colors.primary,
+    color: colors.primary,
     fontWeight: 'bold',
   },
   promotionsTitle2: {
-    marginVertical:20,
-    fontSize: screenWidth*0.05,
+    marginVertical: 20,
+    fontSize: screenWidth * 0.05,
     color: colors.primary,
     fontWeight: 'bold',
-    textAlign:'center'
+    textAlign: 'center'
   },
   promotionItem: {
     padding: 10,

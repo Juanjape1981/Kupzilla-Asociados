@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Platform } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, Platform, Dimensions } from 'react-native';
+import i18n from '../utils/i18n';
 import { useTranslation } from 'react-i18next';
 import colors from '../config/colors';
 import { Image } from 'expo-image';
-import i18n from '../utils/i18n';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const LanguageSelector: React.FC = () => {
   const currentLanguage = i18n.language;
   const { t } = useTranslation();
 const [NewLanguage, setNewLanguage] = useState(false);
+
   const changeLanguageSelect = (lng: string) => {
     i18n.changeLanguage(lng);
   };
@@ -47,7 +50,8 @@ const heightNotFlag = Platform.OS == 'android'? 30: 40
           style={getFlagStyle('sv')} 
         />
       </TouchableOpacity></>:
-      <TouchableOpacity  onPress={() => setNewLanguage(true)}>
+      <TouchableOpacity  style={{ height:48, width:screenWidth*0.4, flexDirection:'row', display:'flex', justifyContent:'space-around',alignItems:'center'}} onPress={() => setNewLanguage(true)}>
+        <MaterialIcons name="language" size={24} color="#fff" />
       <Text style={styles.Text}>{t('languageSelector.chooseLanguage')}</Text>
     </TouchableOpacity>
 }
